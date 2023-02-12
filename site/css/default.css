@@ -1,0 +1,100 @@
+body {
+    max-width: 75rem;
+    line-height: 1.6;
+    font-size: 18px;
+    box-sizing: border-box;
+    background-color: #2a2035;
+    color: #b0b0b0;
+    padding: 0 5%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 1rem 0;
+}
+
+p {
+    margin: 1rem 0;
+}
+.sourceCode {
+    margin: 0 !important;
+    border: 0;
+    padding-left: 2rem;
+}
+
+div.sourceCode {
+    background-color: #dda0dd11;
+    border-left: 0.3em solid #dda0dd;
+}
+.sourceCode > pre.sourceCode {
+    padding: 0;
+}
+pre.sourceCode > code.sourceCode {
+    padding: 0;
+}
+p code {
+    background-color: #dda0dd11;
+    padding: 0 0.5rem;
+}
+
+ul {
+    margin: 1.5em 0;
+    padding: 0 0 0 1.5em;
+}
+
+header {
+    border-bottom: 0.2rem solid #202020;
+    color: #dda0dd;
+    background-color: #dda0dd11;
+    border-bottom-color: #dda0dd;
+    padding: 1.6em 1em;
+}
+
+header a:link {
+    text-decoration: none;
+}
+
+a:link {
+    color: #dda0dd;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #dda0dd;
+    text-decoration: none
+}
+
+header > .logo {
+    float: inherit;
+    padding: 0 0;
+}
+
+header > .logo > a > img {
+    max-height: 6em;
+    padding: 0 0;
+    top: 0px;
+}
+
+header > .logo > a {
+    font-size: 1.2em;
+    color: #e5dbe5;
+}
+
+nav {
+    margin: 0;
+    text-align: right
+}
+
+nav a {
+    font-weight: bold;
+    text-transform: lowercase;
+    margin: 0 0 0 1.2rem;
+
+}
+
+footer {
+    margin-top: 3rem;
+    padding: 1.2rem 0;
+    border-top: 0.2rem solid #202020;
+    font-size: 1.2rem;
+    color: #b0b0b0;
+}

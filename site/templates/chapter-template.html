@@ -1,0 +1,47 @@
+$if(sample)$
+<div class="chapter-preview-box">
+$partial("templates/chapter-preview.html")$
+</div>
+$endif$
+
+<div class="chapter-page-contents">
+  <ul>
+    <li>
+      <span class="chapter-contents-header-link">
+        <a href="#about">Chapter Overview</a>
+      </span>
+    </li>
+    <li>
+      <span class="chapter-contents-header-link">
+        <a href="#solutions">Solutions to the Exercises</a>
+      </span>
+      <div class="chapter-page-contents-solution-list">
+        <ul>
+          $for(solutions)$
+          <li>
+            <span class="chapter-contents-solution-link">
+              <a href="#solution-$exercise-id$">$name$</a>
+            </span>
+          </li>
+          $endfor$
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="chapter-page-body">
+  <a id="about"/>
+  $body$
+</div>
+
+<div class="chapter-page-all-solutions">
+  <h3>Solutions to the Exercises</h3>
+  <a id="solutions"/>
+  $for(solutions)$
+  <div class="chapter-page-solution-body">
+    <a id="solution-$exercise-id$"/>
+    $body$
+  </div>
+  $endfor$
+</div>

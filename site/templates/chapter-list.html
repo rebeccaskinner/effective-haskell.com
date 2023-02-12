@@ -1,0 +1,24 @@
+<div class="chapters-toc-body">
+  <ul>
+    $for(chapters)$
+    <div class="chapter-toc-entry">
+      <div class="chapter-toc-header">
+        <h1>
+          <a href="$url$">Chapter $chapter$: $title$</a>
+          $if(sample)$
+          <span class="chapter-toc-preview-link">
+            <a href="$sample$">preview</a>
+          </span>
+          $endif$
+        </h1>
+      </div>
+      <div class="chapter-toc-exercise-link">
+        <a href="$url$#solutions">Solutions to Exercises</a>
+      </div>
+      <div class="chapter-toc-body">
+        <p>$summary$</p>
+      </div>
+    </div>
+    $endfor$
+  </ul>
+</div>
