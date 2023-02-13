@@ -1,0 +1,46 @@
+cabal-version: 3.0
+
+-- This file has been generated from package.yaml by hpack version 0.35.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           chapter1-solutions
+version:        0
+license:        BSD-2-Clause
+license-file:   LICENSE
+build-type:     Simple
+
+library
+  exposed-modules:
+      EffectiveHaskell.Exercises.Chapter1.Factorial
+      EffectiveHaskell.Exercises.Chapter1.Fibonacci
+      EffectiveHaskell.Exercises.Chapter1.ManualCurrying
+  other-modules:
+      Paths_chapter1_solutions
+  autogen-modules:
+      Paths_chapter1_solutions
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -O2
+  build-depends:
+      base
+  default-language: Haskell2010
+
+test-suite test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      EffectiveHaskell.Exercises.Chapter1.FactorialSpec
+      EffectiveHaskell.Exercises.Chapter1.FibonacciSpec
+      EffectiveHaskell.Exercises.Chapter1.ManualCurryingSpec
+      Paths_chapter1_solutions
+  autogen-modules:
+      Paths_chapter1_solutions
+  hs-source-dirs:
+      test
+  ghc-options: -Wall
+  build-depends:
+      base
+    , chapter1-solutions
+    , hspec
+  default-language: Haskell2010
