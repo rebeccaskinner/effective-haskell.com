@@ -7,24 +7,26 @@ The first exercise in chapter 2
 "
 ---
 
-## Manual Currying {.problem}
+### Reversing a List with Folds
 
 It's possible to easily implement a `reverse` function using folds. Try to
 implement a function that will reverse a list using both `foldl` and
 `foldr`. Which one is simpler? why? Might one be more efficient than the other?
 
-### Hint 1 {.hint}
+### Hints
 
-Some high level hint text
+<div class="hints">
+<details>
+<summary>Click to reveal</summary>
 
-### Hint 2 {.hint}
+</details>
+</div>
 
-Some more detailed hint text
+### Solution
 
-### Hint 3 {.hint}
+<div class="solution">
+<details>
+<summary>Click to reveal</summary>
 
-Even more detailed hint text
-
-### Solution {.solution}
-
-A complete solution for the exercise
+</details>
+</div>

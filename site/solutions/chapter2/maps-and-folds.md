@@ -7,7 +7,7 @@ The second exercise in chapter 2
 "
 ---
 
-## Thinking About Maps and Folds {.problem}
+### Thinking About Maps and Folds {.problem}
 
 Think about the following two lines of code that use
 `map` and `foldr`.  When might
@@ -19,18 +19,21 @@ used `foldl` instead of `foldr`?
 λ \f g -> foldr (g . f) 0
 ```
 
-### Hint 1 {.hint}
 
-Some high level hint text
+### Hints
 
-### Hint 2 {.hint}
+<div class="hints">
+<details>
+<summary>Click to reveal</summary>
 
-Some more detailed hint text
+</details>
+</div>
 
-### Hint 3 {.hint}
+### Solution
 
-Even more detailed hint text
+<div class="solution">
+<details>
+<summary>Click to reveal</summary>
 
-### Solution {.solution}
-
-A complete solution for the exercise
+</details>
+</div>

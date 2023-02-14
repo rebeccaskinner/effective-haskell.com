@@ -7,7 +7,7 @@ The final exercise in chapter 2
 "
 ---
 
-## Folds and Infinite Lists {.problem}
+### Folds and Infinite Lists {.problem}
 
 Think about the following two lines of code that use
 `map` and `foldr`.  When might
@@ -18,19 +18,20 @@ used `foldl` instead of `foldr`?
 λ \f g -> foldr g 0 . map f
 λ \f g -> foldr (g . f) 0
 ```
+### Hints
 
-### Hint 1 {.hint}
+<div class="hints">
+<details>
+<summary>Click to reveal</summary>
 
-Some high level hint text
+</details>
+</div>
 
-### Hint 2 {.hint}
+### Solution
 
-Some more detailed hint text
+<div class="solution">
+<details>
+<summary>Click to reveal</summary>
 
-### Hint 3 {.hint}
-
-Even more detailed hint text
-
-### Solution {.solution}
-
-A complete solution for the exercise
+</details>
+</div>

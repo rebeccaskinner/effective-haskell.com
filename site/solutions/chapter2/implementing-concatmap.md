@@ -7,7 +7,7 @@ The third exercise in chapter 2
 "
 ---
 
-## Implementing concatMap {.problem}
+### Implementing concatMap {.problem}
 
 
 The `concat` function joins a list of lists into a single
@@ -30,18 +30,20 @@ Try implementing `concatMap` using
 `foldl` and `foldr`.  Which one is
 better? Why?
 
-### Hint 1 {.hint}
+### Hints
 
-Some high level hint text
+<div class="hints">
+<details>
+<summary>Click to reveal</summary>
 
-### Hint 2 {.hint}
+</details>
+</div>
 
-Some more detailed hint text
+### Solution
 
-### Hint 3 {.hint}
+<div class="solution">
+<details>
+<summary>Click to reveal</summary>
 
-Even more detailed hint text
-
-### Solution {.solution}
-
-A complete solution for the exercise
+</details>
+</div>

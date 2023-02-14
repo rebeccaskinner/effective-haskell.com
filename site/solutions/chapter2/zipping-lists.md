@@ -7,7 +7,7 @@ The second exercise in chapter 2
 "
 ---
 
-## Zipping Lists {.problem}
+### Zipping Lists
 
 The `zip` function is a special case of a more general
 function available in Prelude called `zipWith`.  The
@@ -25,18 +25,20 @@ Implement the `zipWith` function with and without using
 list comprehensions.  Can you implement `zipWith` using
 `foldl`?
 
-### Hint 1 {.hint}
+### Hints
 
-Some high level hint text
+<div class="hints">
+<details>
+<summary>Click to reveal</summary>
 
-### Hint 2 {.hint}
+</details>
+</div>
 
-Some more detailed hint text
+### Solution
 
-### Hint 3 {.hint}
+<div class="solution">
+<details>
+<summary>Click to reveal</summary>
 
-Even more detailed hint text
-
-### Solution {.solution}
-
-A complete solution for the exercise
+</details>
+</div>
