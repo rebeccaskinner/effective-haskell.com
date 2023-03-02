@@ -1,14 +1,9 @@
 module EffectiveHaskell.Exercises.Chapter2.ReverseWithFold where
 
--- reverseLeft :: [a] -> [a]
--- reverseLeft = foldl (flip (:)) []
-
 reverseLeft :: [a] -> [a]
-reverseLeft = foldl prepend []
-  where
-    prepend reversed a = a : reversed
+reverseLeft = foldl (flip (:)) []
 
 reverseRight :: [a] -> [a]
-reverseRight = foldr append []
+reverseRight = foldr insertElem []
   where
-    append a reversed = reversed <> [a]
+    insertElem a reversed = reversed <> [a]

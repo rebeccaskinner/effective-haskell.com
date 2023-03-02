@@ -7,18 +7,14 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        mkProject = returnShellEnv: import ./project.nix { inherit pkgs returnShellEnv; };
-        runTests = pkgs.writeScriptBin "runTests" ''
-        make test
-'';
-        runTestApps = {
-          type = "app";
-          program = "${self.packages.${system}.runTests}/bin/runTests";
-          buildInputs = [runTests (mkProject false)];
-        };
+        shellEnv = import ./project.nix { inherit pkgs;  returnShellEnv = true; };
+        lib = import ./project.nix { inherit pkgs; returnShellEnv = false; };
       in {
-        packages.runTests = runTests;
-        devShells.default = pkgs.mkShell { inputsFrom = [(mkProject true)]; };
-        apps.test = runTestApps;
+
+        packages.default = lib;
+        devShells.default = pkgs.mkShell {
+          inputsFrom = [shellEnv];
+        };
       });
+  nixConfig.bash-prompt = "\\u@\\h:\\W (nix) λ ";
 }
