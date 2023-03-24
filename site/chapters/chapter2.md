@@ -3,10 +3,14 @@ chapter: 2
 name: Working with Lists
 sample: https://media.pragprog.com/titles/rshaskell/lists.pdf
 summary: "
-A summary for chapter 2
+In this chapter you'll learn about how to work with Lists. Along the way, you'll
+improve you intution for how to write recursive functions, and get hands on
+experience with one of Haskell's most powerful features: pattern matching.
 "
 ---
 
 ### Working with Lists
 
-here's some text
+In this chapter you'll learn about how to work with Lists. Along the way, you'll
+improve you intution for how to write recursive functions, and get hands on
+experience with one of Haskell's most powerful features: pattern matching.
