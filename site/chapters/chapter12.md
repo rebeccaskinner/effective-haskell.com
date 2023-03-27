@@ -1,7 +1,7 @@
 ---
 chapter: 12
 name: Deserializing Heterogenous Data
-summary:"
+summary: "
 Parsing and deserialize is another ubiquitous problem in modern computing, and
 it's a class of problem Haskell is particularly well suited to solving.  In this
 chapter you'll learn how to apply what you've learned so far about `Functors`,
@@ -12,6 +12,7 @@ different types of data.
 
 
 ### Deserializing Heterogenous Data
+
 Parsing and deserialize is another ubiquitous problem in modern computing, and
 it's a class of problem Haskell is particularly well suited to solving.
 

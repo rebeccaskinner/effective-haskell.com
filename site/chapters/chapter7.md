@@ -2,11 +2,11 @@
 chapter: 7
 name: Understanding IO
 summary: "
-Performing IO is essential to the function of almost any application. Even a
-simple "hello world" application must be able to perform IO to run. Haskell's
+Performing IO is essential to the function of almost any application.  Even a
+simple _hello world_ application must be able to perform IO to run.  Haskell's
 approach to IO is significantly different than most other languages. The way
 that Haskell approaches IO is a gateway into one of the most useful and
-challenging parts of learning HaHskell.
+challenging parts of learning Haskell.
 "
 ---
 
