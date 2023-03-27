@@ -2,10 +2,20 @@ verbatim:
   cabal-version: 3.0
 
 license: BSD-2-Clause
-name: "chapter2-solutions"
+name: "solution-code"
 version: 0
 dependencies:
   - base
+  - bytestring
+  - base64-bytestring
+  - containers
+  - text
+  - vector
+  - time
+  - unix
+  - mtl
+  - transformers
+  - process
 
 ghc-options:
   - -Wall
@@ -20,4 +30,4 @@ tests:
     source-dirs: test
     dependencies:
       - hspec
-      - chapter2-solutions
+      - solution-code
