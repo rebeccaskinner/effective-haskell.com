@@ -33,18 +33,199 @@ complete this exercise, but no changes to your `Expr` type should be necessary,
 and you should not need to write any additional functions.
 
 
-### Hint 1 {.hint}
+### Hints
 
-Some high level hint text
+<div class="hints">
 
-### Hint 2 {.hint}
+<details>
+<summary>Click to reveal</summary>
+Even though `Div` is the only operation that might fail, you'll need to return
+an `Either` value for any operation.
+</details>
 
-Some more detailed hint text
+<details>
+<summary>Click to reveal</summary>
+Remember that if you make a recursive call to `safeEval` you'll need to deal
+with the fact that it will return an `Either` instead of an evaluated `Int`.
+</details>
+</div>
 
-### Hint 3 {.hint}
+### Solution
 
-Even more detailed hint text
+<div class="solution">
 
-### Solution {.solution}
+<details>
+<summary>Click to reveal</summary>
+Supporting safe division can be done with a relatively minor refactor of our
+existing `eval` code. Let's start by copying our `eval` function and renaming
+it, then we can incrementally refactor it to support the behavior we want.
 
-A complete solution for the exercise
+```haskell
+safeEval :: Expr -> Int
+safeEval expr =
+  case expr of
+    Lit num -> num
+    Add arg1 arg2 -> eval' (+) arg1 arg2
+    Sub arg1 arg2 -> eval' (-) arg1 arg2
+    Mul arg1 arg2 -> eval' (*) arg1 arg2
+    Div arg1 arg2 -> eval' div arg1 arg2
+    where
+      eval' :: (Int -> Int -> Int) -> Expr -> Expr -> Int
+      eval' operator arg1 arg2 =
+        operator (safeEval arg1) (safeEval arg2)
+
+```
+
+We now have a `safeEval` function, but it's not all that safe. Let's let the
+types help us refactor this code into something that works the way we'd
+like. We'll start by changing the type of `safeEval` to return `Either String
+Int`:
+
+```haskell
+safeEval :: Expr -> Either String Int
+```
+
+If we compile the program with just this change you'll see that we're getting
+errors now. That makes sense, we've changed the stated type of the function, but
+we haven't actually changed any of the values that we're turning. Let's see what
+happens if sprinkle a little optimism on our solution and update each of our
+case branches to return a `Right` value:
+
+```haskell
+safeEval :: Expr -> Either String Int
+safeEval expr =
+  case expr of
+    Lit num -> Right num
+    Add arg1 arg2 -> Right $ eval' (+) arg1 arg2
+    Sub arg1 arg2 -> Right $ eval' (-) arg1 arg2
+    Mul arg1 arg2 -> Right $ eval' (*) arg1 arg2
+    Div arg1 arg2 -> Right $ eval' div arg1 arg2
+    where
+      eval' :: (Int -> Int -> Int) -> Expr -> Expr -> Int
+      eval' operator arg1 arg2 =
+        operator (safeEval arg1) (safeEval arg2)
+```
+
+We're getting closer, but we've still got a compile error. `eval'` is making a
+recursive call to `safeEval` for each of our two arguments, but it's still
+expecting to get back `Int` instead of the `Either String Int` that we're
+returning now. Let's update this function so that we properly handle errors in
+the sub-expressions:
+
+```haskell
+safeEval :: Expr -> Either String Int
+safeEval expr =
+  case expr of
+    Lit num   -> Right num
+    Add arg1 arg2 -> Right $ eval' (+) arg1 arg2
+    Sub arg1 arg2 -> Right $ eval' (-) arg1 arg2
+    Mul arg1 arg2 -> Right $ eval' (*) arg1 arg2
+    Div arg1 arg2 -> Right $ eval' div arg1 arg2
+    where
+      eval' :: (Int -> Int -> Int) -> Expr -> Expr -> Either String Int
+      eval' operator arg1 arg2 =
+        case safeEval arg1 of
+          Left err -> Left err
+          Right a ->
+            case safeEval arg2 of
+              Left err -> Left err
+              Right b -> Right $ operator a b
+```
+
+As you can see in ths example, we've had to updated `eval'` to return an `Either
+String Int` just like `safeEval`. Since we don't have a sensible default value
+to use when we one of the expressions fails, the only option is to return the
+error. Unfortunately, now we've got a problem with our original set of
+changes. Let's make another refactor to remove the `Right` constructor wrapping
+our calls to `safeEval` since we're going to be returning an `Either` value
+directly now:
+
+```haskell
+safeEval :: Expr -> Either String Int
+safeEval expr =
+  case expr of
+    Lit num   -> Right num
+    Add arg1 arg2 -> eval' (+) arg1 arg2
+    Sub arg1 arg2 -> eval' (-) arg1 arg2
+    Mul arg1 arg2 -> eval' (*) arg1 arg2
+    Div arg1 arg2 -> eval' div arg1 arg2
+    where
+      eval' :: (Int -> Int -> Int) -> Expr -> Expr -> Either String Int
+      eval' operator arg1 arg2 =
+        case safeEval arg1 of
+          Left err -> Left err
+          Right a ->
+            case safeEval arg2 of
+              Left err -> Left err
+              Right b -> Right $ operator a b
+
+```
+
+With this set of changes, we finally have a compiling version of our
+function. Unfortunately, it's still not actually doing any error handling:
+
+```haskell
+λ safeEval $ Lit 10 `Div` Lit 0
+Right *** Exception: divide by zero
+```
+It looks like we're not quite done refactoring afterall. In this version of our
+code, we're passing an operator to `eval'`, but the actual operator still can't
+deal with failure. If we want to safely handle division by zero, we'll need to
+update `eval'` so that the operator it accepts returns an `Either String
+Int`. We'll also need to update _all_ of the operators we pass in. In most
+cases, we'll be able to always return a `Right` value, but for division we'll
+need to check the denominator. Let's take a look at the final version:
+
+```haskell
+safeEval :: Expr -> Either String Int
+safeEval expr =
+  case expr of
+    Lit num   -> Right num
+    Add arg1 arg2 -> eval' (opHelper (+)) arg1 arg2
+    Sub arg1 arg2 -> eval' (opHelper (-)) arg1 arg2
+    Mul arg1 arg2 -> eval' (opHelper (*)) arg1 arg2
+    Div arg1 arg2 -> eval' safeDiv arg1 arg2
+    where
+      safeDiv :: Int -> Int -> Either String Int
+      safeDiv a b
+        | b == 0 = Left "Error: division by zero"
+        | otherwise = Right $ a `div` b
+
+      opHelper ::
+        (Int -> Int -> Int) ->
+        Int ->
+        Int ->
+        Either String Int
+      opHelper op a b = Right $ a `op` b
+
+      eval' ::
+        (Int -> Int -> Either String Int) ->
+        Expr ->
+        Expr ->
+        Either String Int
+      eval' operator arg1 arg2 =
+        case safeEval arg1 of
+          Left err -> Left err
+          Right a ->
+            case safeEval arg2 of
+              Left err -> Left err
+              Right b -> operator a b
+
+```
+
+In this final version, we've added two new functions. `opHelper` let's us wrap
+the operations like multiplication and addition that won't fail, and `safeDiv`
+which safely returns a `Left` value when the denominator is zero. Finally, we're
+dropped the explicit `Right` constructor in `eval'` since `operator` will now
+return an `Either` value. Let's take a look to see this in action:
+
+```haskell
+λ safeEval $ (Lit 1 `Div` Lit 0) `Add` (Lit 1 `Mul` Lit 2)
+Left "Error: division by zero"
+
+λ safeEval $ (Lit 1 `Div` Lit 1) `Add` (Lit 1 `Mul` Lit 2)
+Right 3
+```
+
+</details>
+</div>
