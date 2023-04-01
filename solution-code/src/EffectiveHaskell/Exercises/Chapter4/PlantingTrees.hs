@@ -37,6 +37,9 @@ addElementToIntTree tree n =
       | n < a -> Branch (addElementToIntTree l n) a r
       | otherwise -> Branch l a r
 
+intTreeFromList :: [Int] -> BinaryTree Int
+intTreeFromList = foldr (flip addElementToIntTree) Leaf
+
 doesIntExist :: BinaryTree Int -> Int -> Bool
 doesIntExist Leaf _ = False
 doesIntExist (Branch l a r) n

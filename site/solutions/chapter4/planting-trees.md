@@ -288,10 +288,96 @@ explicit equality test, it would have functioned the same way, but you might get
 warnings about an incomplete pattern. Although we know that `n` must always be
 greater than, less than, or equal to `a`, the compiler doesn't know that and
 assumes we might have missed a pattern.
+
+Testing this solution isn't entirely straightforward. In the last part of this
+exercise we built a program that would let us display trees full of strings, but
+now we're working with trees full of numbers. Let's write couple helper function
+to make it easier for us to view the results of inserting a new value:
+
+```haskell
+showTree :: BinaryTree Int -> BinaryTree String
+showTree Leaf = Leaf
+showTree (Branch l a r) = Branch (showTree l) (show a) (showTree r)
+```
+
+This `showTree` function will let us convert a tree containing numbers into a
+`BinaryTree String` that we can use with the `showStringTree` function that we
+wrote earlier. Let's test it out:
+
+```haskell
+λ showStringTree . showTree $ Branch (Branch Leaf 1 Leaf) 2 (Branch Leaf 3 Leaf)
+"1,2,3"
+```
+
+It looks like `showStringTree` is working with a small example list. Let's try
+using `addElementToIntTree` to add some numbers to a larger tree, then see if we
+get the right output:
+
+```haskell
+λ showStringTree . showTree $ addElementToIntTree (addElementToIntTree (addElementToIntTree Leaf 2) 3) 1
+"1,2,3"
+```
+
+It works! It's also a lot of typing! Let's write another helpfer function- this
+time we'll write one that lets us convert a list of numbers into a tree:
+
+```haskell
+intTreeFromList :: [Int] -> BinaryTree Int
+intTreeFromList = foldl addElementToIntTree Leaf
+```
+
+This function uses `foldl` to add all of the elements from a list into the tree,
+starting with an empty tree. As you can imagine, we could easily modify this
+function to insert elements into an existing tree as well. We're using `foldl`
+here since our binary tree operations do not support infinite trees.
+
+Let's give this a shot to see if it works:
+
+```haskell
+λ showStringTree . showTree $ intTreeFromList [3,2,1]
+"1,2,3"
+
+λ showStringTree . showTree $ intTreeFromList [3,2,1]
+"1,2,3"
+
+λ showStringTree . showTree $ intTreeFromList [3,2,1]
+"1,2,3"
+```
+
+Our function works, and we can see that the order we insert elements
+doesn't matter, since `showStringTree` will always print the elements in
+order. It is worth keeping in mind that, since we are not rebalancing our tree
+on insertion, adding elements that are already in order (or exactly in reverse)
+results in an extremely unbalanced tree. This isn't a problem per-se, just a
+trade-off we made to keep the solution simple. As you get more experience with
+Haskell you can continue to work on this exercise and try to build a version of
+your insertion function that will rebalance itself.
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+The last question in this exercise asks us to write a function to find whether
+a particular value exists in a tree of numbers. This function ends up being very
+similar to our earlier insertion function:
+
+```haskell
+doesIntExist :: BinaryTree Int -> Int -> Bool
+doesIntExist Leaf _ = False
+doesIntExist (Branch l a r) n
+  | n > a = doesIntExist r n
+  | n < a = doesIntExist l n
+  | otherwise = True
+```
+
+This algorithm relies on the tree being "well-formed”. That is to say, the tree
+should follow the same structure that we used for `addElementToIntTree`. Smaller
+elements to the left, larger elements to the right. If the current element that
+we're looking at is an empyt `Leaf` then we can be sure that the element doesn't
+exist in the tree. If we're looking at a `Branch` whose element matches what
+we're looking for, then we've found it. Otherwise, we can look at the left or
+right subtree depending on whether the element we're searching for is smaller or
+larger than the element at the root of the current tree.
+
 </details>
 
 </div>
