@@ -112,6 +112,186 @@ Try making `showString` print out the elements in order. Here's an example:
 
 <details>
 <summary>Click to reveal</summary>
+The first part of this exercises asks us to find a way to print a binary tree
+containing strings. Since we don't have a particular output format, let's start
+with a naive printing function and refactor if we're not happy with it:
+
+```haskell
+showStringNaive :: BinaryTree String -> String
+showStringNaive Leaf = ""
+showStringNaive (Branch l a r) =
+  leftStr <> "," <> a <> "," <> rightStr
+  where
+    leftStr = showStringNaive l
+    rightStr = showStringNaive r
+```
+
+You'll notice that the first thing we do is pattern match on the tree. Since a
+`Leaf` doesn't have any value associated with it, we can just return an empty
+string. To create a string for a `Branch`, we needto include both the current
+value in the branch, as well as the stringified versions of the left and right
+subtrees.
+
+Let's load this up in `ghci` and test it out:
+
+```haskell
+λ showStringNaive $ Leaf
+""
+
+λ showStringNaive $ Branch Leaf "a" Leaf
+",a,"
+
+λ showStringNaive $ Branch (Branch Leaf "a" Leaf) "b" (Branch Leaf "c" Leaf)
+",a,,b,,c,"
+```
+
+Our elements are being printed out in order, which is what we want, but the
+extra commas are pretty ugly. Let's see if we can fix that. The first thing
+we'll do is to decouple traversing the tree from generating the output. Instead
+of doing it all in one pass, we'll add a helper function called
+`binaryTreeToList` that will traverse the tree and return a list with all of the
+elements in the right order:
+
+```haskell
+binaryTreeToList :: BinaryTree a -> [a]
+binaryTreeToList Leaf = []
+binaryTreeToList (Branch l a r) =
+  binaryTreeToList l <> [a] <> binaryTreeToList r
+```
+
+You can see that the logic here is more or less identical to the logic we used
+for putting the tree together, but we're not trying to actually merge the
+strings together. This has the additional benefit that we can ignore the details
+about what kind of tree we're dealing with, so we could use this for trees with
+data other than just strings.
+
+Next, we need to combine the list of strings into a single string with commas
+inbetween each element. There's a function in from `Data.List` in `Prelude` that
+can do this for us. It's called `intercalate`:
+
+```haskell
+λ import Data.List (intercalate)
+
+λ :t intercalate
+intercalate :: [a] -> [[a]] -> [a]
+
+λ intercalate "," ["a","b","c"]
+"a,b,c"
+
+λ intercalate "," ["a"]
+"a"
+
+λ intercalate "," ["a","b"]
+"a,b"
+```
+
+We can use this function make our program work as we'd hoped:
+
+```haskell
+showStringTree :: BinaryTree String -> String
+showStringTree = intercalate "," . binaryTreeToList
+```
+
+Let's run this and see how it works:
+
+```haskell
+λ showStringTree $ Branch (Branch Leaf "a" Leaf) "b" (Branch Leaf "c" Leaf)
+"a,b,c"
+```
+
+Much better! This version of our function works just as we'd have
+hoped. Unfortunately, we had to rely on a function that wasn't covered in the
+chapter to get there. Let's address that by writing our own version of
+`intercalate`:
+
+```haskell
+intercalate :: [a] -> [[a]] -> [a]
+intercalate a (x:y:ys) = x <> a <> intercalate a (y:ys)
+intercalate _ (y:_) = y
+intercalate _ [] = []
+```
+You'll notice that this function uses pattern matching a bit differently than
+many other examples you've seen. Normally, when we're pattern matching on a
+list, we're only pulling out a single element:
+
+```haskell
+(x:xs)
+```
+
+In `intercalate` we're pattern matching on the first _two_ elements of a
+list. We only want to add a new element between pairs of elements- never before
+or after a single element. Pattern matching on the first two elements allows us
+to easily ensure that our list has two elements. In the second pattern, we only
+have a single element list. In that case, we want to return it as is. Similarly,
+in the last pattern, we have an empty list and so we can only return an empty
+list. We can write this a bit more tersely by combining the last two patterns:
+
+```haskell
+intercalate :: [a] -> [[a]] -> [a]
+intercalate a (x:y:ys) = x <> a <> intercalate a (y:ys)
+intercalate _ rest = concat rest
+```
+
+Let's take one last look at all of this together:
+
+```haskell
+showStringTree :: BinaryTree String -> String
+showStringTree = intercalate "," . binaryTreeToList
+
+intercalate :: [a] -> [[a]] -> [a]
+intercalate a (x:y:ys) = x <> a <> intercalate a (y:ys)
+intercalate _ rest = concat rest
+
+binaryTreeToList :: BinaryTree a -> [a]
+binaryTreeToList Leaf = []
+binaryTreeToList (Branch l a r) = binaryTreeToList l <> [a] <> binaryTreeToList r
+```
+
+</details>
+
+<details>
+<summary>Click to reveal</summary>
+
+The next part of our exercises asks us to add an element to a tree of
+`Int`s. Just like the last part of this exercise, we have some flexibility here
+to determine for ourselves exactly how we want to handle inserting a
+value. Let's go with a fairly simple approach. We won't worry about keeping tree
+balanced. The first element that we insert will become the root of our tree. Any
+elements we insert that are numerically less than the root will go into the
+left side of the tree, and any elements greater tan the root will go into the
+right side of the tree. If an element already exists in the tree, we won't
+insert it again. Let's take a look at the code:
+
+```haskell
+addElementToIntTree :: BinaryTree Int -> Int -> BinaryTree Int
+addElementToIntTree tree n =
+  case tree of
+    Leaf -> Branch Leaf n Leaf
+    Branch l a r
+      | n > a -> Branch l a (addElementToIntTree r n)
+      | n < a -> Branch (addElementToIntTree l n) a r
+      | otherwise -> Branch l a r
+```
+
+You'll see that the code in this example maps pretty closely to our description
+of the algorithm. We start by pattern matching on the tree. If it's empty
+(`Leaf`) we create a new root node that contains our value, with empty left and
+right subtrees (`Branch Leaf n Leaf`). If we've got a branch, we compare it's
+value with our current value. If the value we're insert is bigger, we
+recursively insert our value into the right subtree. If it's smaller, we
+recursively insert our value into the left subtree. Otherwise, the values must
+be the same and so we don't need to do anything.
+
+You'll notice that we're using a wildcard `otherwise` guard in this example
+instead of explicitly testing for equality. If we'd written the code with an
+explicit equality test, it would have functioned the same way, but you might get
+warnings about an incomplete pattern. Although we know that `n` must always be
+greater than, less than, or equal to `a`, the compiler doesn't know that and
+assumes we might have missed a pattern.
+</details>
+
+<details>
+<summary>Click to reveal</summary>
 </details>
 
 </div>

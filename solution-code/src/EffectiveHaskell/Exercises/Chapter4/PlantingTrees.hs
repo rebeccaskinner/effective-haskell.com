@@ -1,16 +1,28 @@
 {-# LANGUAGE DerivingStrategies #-}
 module EffectiveHaskell.Exercises.Chapter4.PlantingTrees where
+-- import Data.List (intercalate)
 
 data BinaryTree a = Leaf | Branch (BinaryTree a) a (BinaryTree a)
   deriving stock (Eq, Show)
 
-showStringTree :: BinaryTree String -> String
-showStringTree = mergeWith "," . sortTree
+showStringNaive :: BinaryTree String -> String
+showStringNaive Leaf = ""
+showStringNaive (Branch l a r) =
+  leftStr <> "," <> a <> "," <> rightStr
   where
-    mergeWith c (x:y:zs) = x <> c <> mergeWith c (y:zs)
-    mergeWith c xs = concat xs
-    sortTree Leaf = []
-    sortTree (Branch l a r) = sortTree l <> [a] <> sortTree r
+    leftStr = showStringNaive l
+    rightStr = showStringNaive r
+
+showStringTree :: BinaryTree String -> String
+showStringTree = intercalate "," . binaryTreeToList
+
+intercalate :: [a] -> [[a]] -> [a]
+intercalate a (x:y:ys) = x <> a <> intercalate a (y:ys)
+intercalate _ rest = concat rest
+
+binaryTreeToList :: BinaryTree a -> [a]
+binaryTreeToList Leaf = []
+binaryTreeToList (Branch l a r) = binaryTreeToList l <> [a] <> binaryTreeToList r
 
 showTree :: BinaryTree Int -> BinaryTree String
 showTree Leaf = Leaf
