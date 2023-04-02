@@ -105,6 +105,7 @@ Try making `showString` print out the elements in order. Here's an example:
 "0,5,9,10"
 ```
 </details>
+</div>
 
 ### Solution
 
@@ -379,5 +380,4 @@ right subtree depending on whether the element we're searching for is smaller or
 larger than the element at the root of the current tree.
 
 </details>
-
 </div>

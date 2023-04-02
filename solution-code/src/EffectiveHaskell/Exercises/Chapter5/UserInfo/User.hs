@@ -1,41 +1,3 @@
----
-chapter: 5
-exercise-id: 3
-name: Document Your Modules
-summary: "
-Practice writing good documentation in this exercise by creating documentation
-for several different projects that you've built so far as you've worked through
-the book.
-"
----
-
-## Document Your Modules {.problem}
-
-Review the projects that you created in this chapter, as well as any cabal
-projects you created while working through previous examples, and document
-them. Make sure to check out the [official haddock
-documentation](https://haskell-haddock.readthedocs.io/en/latest/index.html) to
-find out about more ways that you can effectively format your documentation.
-
-### Hints
-
-<div class="hints">
-<details>
-<summary>Click to reveal</summary>
-There's no trick to this question, it's merely a chance for you to get practice
-writing documentation.
-</details>
-</div>
-
-### Solution
-
-<div class="solution">
-
-<details>
-<summary>Click to reveal</summary>
-Here's an example of our refactored `User` module:
-
-```haskell
 module EffectiveHaskell.Exercises.Chapter5.UserInfo.User
   ( -- * User and Accessor Info
     -- | A 'User' can be some user with an account on a
@@ -101,7 +63,3 @@ testUserPassword ::
   Bool
 testUserPassword user passwordAttempt =
   passwordAttempt == userPassword user
-```
-
-</details>
-</div>
