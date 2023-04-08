@@ -56,18 +56,20 @@ decide whether `Just []` should be considered a null value or not by selecting
 which type they derive their instance from.
 
 
-### Hint 1 {.hint}
+### Hints
+<div class="hints">
 
-Some high level hint text
+<details>
+<summary>Click to reveal</summary>
 
-### Hint 2 {.hint}
+</details>
+</div>
 
-Some more detailed hint text
+### Solution
 
-### Hint 3 {.hint}
+<div class="solution">
+<details>
+<summary>Click to reveal</summary>
 
-Even more detailed hint text
-
-### Solution {.solution}
-
-A complete solution for the exercise
+</details>
+</div>

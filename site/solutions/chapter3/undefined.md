@@ -40,7 +40,6 @@ There are many other ways we could use undefined to write a version of
 Think about all of the ways that you can η-reduce (eta-reduce) your code when
 the definition of the function is `undefined` .
 </details>
-</div>
 
 <details>
 <summary>Click to reveal</summary>
