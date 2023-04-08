@@ -110,14 +110,14 @@ main = hakyll $ do
         >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
-  -- match "projects/*" $ do
-  --   route $ setExtension "html"
-  --   compile $
-  --     pandocCompiler'
-  --       >>= saveSnapshot "postPreTemplate"
-  --       >>= loadAndApplyTemplate "templates/post.html" postCtx
-  --       >>= loadAndApplyTemplate "templates/default.html" postCtx
-  --       >>= relativizeUrls
+  match "projects/*" $ do
+    route $ setExtension "html"
+    compile $
+      pandocCompiler'
+        >>= saveSnapshot "postPreTemplate"
+        >>= loadAndApplyTemplate "templates/post.html" postCtx
+        >>= loadAndApplyTemplate "templates/default.html" postCtx
+        >>= relativizeUrls
 
   -- create ["archive.html"] $ do
   --   route idRoute
