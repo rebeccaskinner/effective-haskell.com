@@ -11,6 +11,27 @@ $endif$
         <a href="#about">Chapter Overview</a>
       </span>
     </li>
+
+    $if(has-bonus-content)$
+    <li>There is bonus content</li>
+    <li>
+      <span class="chapter-contents-header-link">
+        <a href="#bonuses">Bonus Content for this Chapter</a>
+      </span>
+      <div class="chapter-page-contents-solution-list">
+        <ul>
+          $for(bonuses)$
+          <li>
+            <span class="chapter-contents-solution-link">
+              <a href="#bonus-$bonus-id$">$title$</a>
+            </span>
+          </li>
+          $endfor$
+        </ul>
+      </div>
+    </li>
+    $endif$
+
     <li>
       <span class="chapter-contents-header-link">
         <a href="#solutions">Solutions to the Exercises</a>
@@ -27,6 +48,7 @@ $endif$
         </ul>
       </div>
     </li>
+
   </ul>
 </div>
 
@@ -34,6 +56,19 @@ $endif$
   <a id="about"/>
   $body$
 </div>
+
+$if(has-bonus-content)$
+<div class="chapter-page-all-solutions">
+  <h3>Bonus Content for this Chapter</h3>
+  <a id="bonuses"/>
+  $for(bonuses)$
+  <div class="chapter-page-bonus-body">
+    <a id="bonus-$bonus-id$"/>
+    $body$
+  </div>
+  $endfor$
+</div>
+$endif$
 
 <div class="chapter-page-all-solutions">
   <h3>Solutions to the Exercises</h3>

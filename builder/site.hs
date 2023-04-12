@@ -11,6 +11,8 @@ import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
 import Data.Monoid (mappend, mconcat)
 import Data.String
+import Data.Maybe (catMaybes)
+import Data.Traversable (for)
 import Hakyll
 import Text.Pandoc.Highlighting (
   Style,
@@ -61,6 +63,17 @@ main = hakyll $ do
         >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
+  match "bonus-content/*/*" $ do
+    route $ setExtension "html"
+    compile $ do
+      let ctx =  defaultContext
+      pandocCompiler'
+        >>= saveSnapshot "bonusContentPreTemplate"
+        >>= loadAndApplyTemplate "templates/bonus-content.html" ctx
+        >>= saveSnapshot "bonusContentPostTemplate"
+        >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= relativizeUrls
+
   match "solutions/solutions.md" $ do
     route $ setExtension "html"
     compile $ do
@@ -78,13 +91,28 @@ main = hakyll $ do
     compile $ do
       chapter <- (`getMetadataField'` "chapter") =<<  getUnderlying
       rawSolutions <- loadAllSnapshots "solutions/*/*" "solutionPreTemplate"
+      rawBonusContent <- loadAllSnapshots "bonus-content/*/*" "bonusContentPreTemplate"
       solutions <- exercisesForChapter chapter rawSolutions
-
+      bonusContent <- contentForChapter chapter rawBonusContent
       let
+        hasBonusContentCtx =
+          boolField "has-bonus-content" $ const (not $ null rawBonusContent)
+
+        bonusContentIds = enumeratedItemContext "bonus-id" bonusContent
+
         solutionCtx =
           listField "solutions" defaultContext $ pure solutions
+        bonusContentCtx =
+          listField "bonuses" (bonusContentIds <> defaultContext) $ pure bonusContent
         titleField = field "title" lookupChapterTitle
-        ctx = titleField <> defaultContext <> solutionCtx <> titleField
+        ctx = mconcat [ titleField
+                      , defaultContext
+                      , solutionCtx
+                      , bonusContentIds
+                      , bonusContentCtx
+                      , titleField
+                      , hasBonusContentCtx
+                      ]
 
       pandocCompiler'
         >>= saveSnapshot "chaptersPreTemplate"
@@ -99,14 +127,14 @@ main = hakyll $ do
       chapters <- do
         chpList <- loadAllSnapshots "chapters/*.md" "chaptersPreTemplate"
         sortChapters chpList
+
       let
         f = field "title" lookupChapterTitle
         chpCtx =
           listField "chapters" (f <> defaultContext) $ pure chapters
         contentsTitle = constField "title" "Effective Haskell: Table of Contents"
         ctx = contentsTitle <> defaultContext <> chpCtx
-      makeItem ""
-        >>= loadAndApplyTemplate "templates/chapter-list.html" ctx
+      makeItem "" >>= loadAndApplyTemplate "templates/chapter-list.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
@@ -114,9 +142,8 @@ main = hakyll $ do
     route $ setExtension "html"
     compile $
       pandocCompiler'
-        >>= saveSnapshot "postPreTemplate"
-        >>= loadAndApplyTemplate "templates/post.html" postCtx
-        >>= loadAndApplyTemplate "templates/default.html" postCtx
+        >>= saveSnapshot "projectsPreTemplate"
+        >>= loadAndApplyTemplate "templates/default.html" defaultContext
         >>= relativizeUrls
 
   -- create ["archive.html"] $ do
@@ -208,14 +235,29 @@ sortChapters items = map snd . sortOn (read @Int . fst) <$> traverse withChapter
     withChapter item =
       (,item) <$> getMetadataField' (itemIdentifier item) "chapter"
 
+enumeratedItemContext :: String -> [Item a] -> Context a
+enumeratedItemContext key items =
+  field key lookupIdentifier
+  where
+    identifiers = itemIdentifier <$> items
+    indexes = map show [0..]
+    identifierMap = Map.fromList $ zip identifiers indexes
+    -- partial, should be fine
+    lookupIdentifier = pure . (identifierMap Map.!) . itemIdentifier
+
 exercisesForChapter ::
   String ->  [Item a] -> Compiler [Item a]
 exercisesForChapter chapterID solutions =
-  filterM solutionForChapter solutions >>= sortExercises
+  contentForChapter chapterID solutions >>= sortExercises
+
+contentForChapter ::
+  String ->  [Item a] -> Compiler [Item a]
+contentForChapter chapterID items =
+  filterM itemForChapter items
   where
-    solutionForChapter solution = do
-      solutionChapter <- getMetadataField' (itemIdentifier solution) "chapter"
-      pure $ chapterID == solutionChapter
+    itemForChapter item = do
+      itemChapter <- getMetadataField' (itemIdentifier item) "chapter"
+      pure $ chapterID == itemChapter
 
 customPandoc :: Pandoc -> Pandoc
 customPandoc = id

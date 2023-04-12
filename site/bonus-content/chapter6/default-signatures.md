@@ -1,6 +1,6 @@
 ---
 chapter: 6
-name: Using the DefaultSignatures Extension
+title: Using the DefaultSignatures Extension
 summary: "
 When writing type classes, you'll sometimes find yourself in facing an
 unfortunate choice. There are default instances that you can provide for some
@@ -17,4 +17,4 @@ function in your class.
 
 The [Default
 Signatures](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/default_signatures.html)
-extension
+extension is good for some things.
