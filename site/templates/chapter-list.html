@@ -16,9 +16,12 @@
         <a href="$url$#solutions">Solutions to Exercises</a>
       </div>
       $if(chapter-has-bonus-content)$
+      there is bonus content here
       <div class="chapter-toc-bonus-content-link">
         <a href="$url$#bonuses">Bonus Content for this Chapter</a>
       </div>
+      $else$
+      no bonus content here
       $endif$
       <div class="chapter-toc-body">
         <p>$summary$</p>

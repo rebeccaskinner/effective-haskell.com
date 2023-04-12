@@ -51,8 +51,9 @@
         apps.buildAndWatch = buildAndWatch;
         defaultPackage = self.packages.${system}.builder;
         defaultApp = self.apps.${system}.buildAndWatch;
-        devShells.default = pkgs.mkShell {
-            inputsFrom = [(builder true)] ++ shellPackages;
-          };
+        devShell = pkgs.mkShell {
+          inputsFrom = [(builder true)] ++ shellPackages;
+          buildInputs = shellPackages;
+        };
       });
 }
