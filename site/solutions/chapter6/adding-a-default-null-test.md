@@ -83,7 +83,7 @@ other approaches we could have used that offer more flexibility.
 
 In this example, our motivation for adding an `Eq` constraint to the definition
 of `Nullable` was so that we could provide a default implementation of
-`isNull`. There's a common alternative that gives us almsot as much ease-of-use
+`isNull`. There's a common alternative that gives us almost as much ease-of-use
 with a lot more flexibility: helper functions. Let's start looking at how they
 work by creating a new function called `isNullHelper`:
 

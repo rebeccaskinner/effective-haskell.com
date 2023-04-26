@@ -1,0 +1,92 @@
+cabal-version: 3.0
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           solution-code
+version:        0
+license:        BSD-2-Clause
+license-file:   LICENSE
+build-type:     Simple
+
+library
+  exposed-modules:
+      EffectiveHaskell.BonusContent.Chapter6.DefaultSignatures
+      EffectiveHaskell.Exercises.Chapter1.Factorial
+      EffectiveHaskell.Exercises.Chapter1.Fibonacci
+      EffectiveHaskell.Exercises.Chapter1.ManualCurrying
+      EffectiveHaskell.Exercises.Chapter2.ConcatMap
+      EffectiveHaskell.Exercises.Chapter2.InfiniteFoldl
+      EffectiveHaskell.Exercises.Chapter2.InfiniteFolds
+      EffectiveHaskell.Exercises.Chapter2.ReverseWithFold
+      EffectiveHaskell.Exercises.Chapter2.ZippingLists
+      EffectiveHaskell.Exercises.Chapter3.FillingInTypeHoles
+      EffectiveHaskell.Exercises.Chapter3.FunctionsByType
+      EffectiveHaskell.Exercises.Chapter3.Undefined
+      EffectiveHaskell.Exercises.Chapter4.CalculatorPrettyPrinter
+      EffectiveHaskell.Exercises.Chapter4.EvalDivisionByZero
+      EffectiveHaskell.Exercises.Chapter4.PlantingTrees
+      EffectiveHaskell.Exercises.Chapter5.UserInfo
+      EffectiveHaskell.Exercises.Chapter5.UserInfo.Authentication
+      EffectiveHaskell.Exercises.Chapter5.UserInfo.KnownUsers
+      EffectiveHaskell.Exercises.Chapter5.UserInfo.User
+      EffectiveHaskell.Exercises.Chapter5.UserInfoDocumented
+      EffectiveHaskell.Exercises.Chapter5.UserInfoPreRefactor
+      EffectiveHaskell.Exercises.Chapter6.DefaultHelperNull
+      EffectiveHaskell.Exercises.Chapter6.DefaultNull
+      EffectiveHaskell.Exercises.Chapter6.DefaultSignaturesNull
+      EffectiveHaskell.Exercises.Chapter6.NullableExercise
+  other-modules:
+      Paths_solution_code
+  autogen-modules:
+      Paths_solution_code
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -O2
+  build-depends:
+      base
+    , base64-bytestring
+    , bytestring
+    , containers
+    , hashable
+    , mtl
+    , process
+    , text
+    , time
+    , transformers
+    , unix
+    , vector
+  default-language: Haskell2010
+
+test-suite test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      EffectiveHaskell.Exercises.Chapter1.FactorialSpec
+      EffectiveHaskell.Exercises.Chapter1.FibonacciSpec
+      EffectiveHaskell.Exercises.Chapter1.ManualCurryingSpec
+      EffectiveHaskell.Exercises.Chapter2.ReverseWithFoldSpec
+      EffectiveHaskell.Exercises.Chapter2.ZippingListsSpec
+      Paths_solution_code
+  autogen-modules:
+      Paths_solution_code
+  hs-source-dirs:
+      test
+  ghc-options: -Wall
+  build-depends:
+      base
+    , base64-bytestring
+    , bytestring
+    , containers
+    , hashable
+    , hspec
+    , mtl
+    , process
+    , solution-code
+    , text
+    , time
+    , transformers
+    , unix
+    , vector
+  default-language: Haskell2010

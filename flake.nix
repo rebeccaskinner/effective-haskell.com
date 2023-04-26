@@ -8,6 +8,26 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         hsPkgs = pkgs.haskellPackages;
+        hsDevPkgs = hsPkgs.ghcWithPackages(p: with p;
+          [ # packages used in effective haskell
+            bytestring
+            base64-bytestring
+            text
+            containers
+            vector
+            time
+            unix
+            mtl
+            transformers
+            process
+
+            # testing packages
+            hspec
+            hspec-expectations
+
+            # additional packages used in bonus content
+            hashable
+          ]);
         builder = returnShellEnv:
           import ./builder/default.nix { inherit pkgs hsPkgs returnShellEnv;};
         site = pkgs.stdenv.mkDerivation {
@@ -30,11 +50,13 @@
             cp -r CNAME $out
           '';
         };
-        shellPackages =
-          (with hsPkgs; [ fourmolu ghcid hlint ]) ++
-          (with pkgs; [ linkchecker ]);
 
-        buildAndWatchScript = pkgs.writeScriptBin "buildAndWatch" ''
+        shellPackages =
+          (with hsPkgs; [fourmolu ghcid hlint]) ++
+          (with pkgs; [ linkchecker ]) ++
+          [ hsDevPkgs ];
+
+         buildAndWatchScript = pkgs.writeScriptBin "buildAndWatch" ''
           cd site;
           ${self.packages.${system}.builder}/bin/builder clean;
           ${self.packages.${system}.builder}/bin/builder watch;
