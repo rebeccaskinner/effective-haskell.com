@@ -3,10 +3,9 @@ body {
     line-height: 1.6;
     font-size: 18px;
     box-sizing: border-box;
-    background-color: white;
+    background-color: #dda0dd11;
     color: #2a2035; 
     padding: 0 5%;
-
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -45,7 +44,9 @@ ul {
 header {
     border: 0.5rem solid #dda0dd;
     color: #dda0dd;
-    background-color: #dda0dd11;
+    background-image: url(../images/polygon.jpg);
+    height: 15rem;
+    object-fit: cover;
     padding: 1.6em 1em;
     background-color: #2a2035;
     border-radius:  0 15px 15px 15px;
