@@ -1,3 +1,23 @@
+@font-face {
+    font-family: 'Golos';
+    font-style: normal;
+    src: url('./fonts/golos-text_regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "golos-bold";
+    src: url('./fonts/golos-text_bold.woff2');
+}
+
+@font-face {
+    font-family: "golos-black";
+    src: url('./fonts/golos-text_black.woff2');
+}
+
+html {
+    font-family: 'Golos', Arial, Helvetica, sans-serif;
+}
+
 body {
     max-width: 75rem;
     line-height: 1.6;
@@ -42,11 +62,15 @@ ul {
 }
 
 header {
-    border: 0.5rem solid #dda0dd;
-    color: #dda0dd;
-    object-fit: cover;
+    @media (min-width: 768px) {
+        margin-top: -1rem;
+        height: 80vh;
+    }
+}
+
+.hero {
     padding: 1.6em 1em;
-    background-color: #2a2035;
+    background: linear-gradient(0.33turn, #4e2976, #f682f6);
     @media (min-width: 768px) {
         height: 15rem;
     }
@@ -57,27 +81,27 @@ header a:link {
 }
 
 a:link {
-    color: #dda0dd;
+    color: #ffffff;
     text-decoration: none;
+    transition: 0.3s;
 }
 
 a:visited {
-    color: #dda0dd;
-    text-decoration: none
+    text-decoration: none;
 }
 
-header > .logo {
+header > .hero > .logo {
     float: inherit;
     padding: 0 0;
 }
 
-header > .logo > a > img {
+header > .hero >.logo > a > img {
     max-height: 6em;
     padding: 0 0;
     top: 0px;
 }
 
-header > .logo > a {
+header > .hero > .logo > a {
     color: #e5dbe5;
     font-size: 2.4rem;
     @media (min-width: 768px) {
@@ -116,6 +140,10 @@ a.anchor-accent {
 .anchor-accent:hover {
     color: #dda0dd;
     transition: 0.1s;
+}
+
+.header-link:hover {
+    font-size: 1.2rem;
 }
 
 .beta-disclaimer {
