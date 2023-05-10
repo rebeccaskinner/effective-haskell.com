@@ -110,6 +110,10 @@ nav > a:hover {
   text-decoration-color: rgba(255, 255, 255, 1);
 }
 
+nav > .header-link {
+  color: #ffffff !important;
+}
+
 a:link {
   color: rgba(118,67,169,1);
 }
