@@ -284,7 +284,7 @@ footer {
 
 
 .list-icon {
-display: none;
+  display: none;
 }
 
 
@@ -377,6 +377,7 @@ display: none;
 
   .list-icon {
     margin-right: 1rem;
+    display: block;
   }
 
   .purple-icon {
