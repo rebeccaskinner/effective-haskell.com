@@ -283,6 +283,11 @@ footer {
 }
 
 
+.list-icon {
+display: none;
+}
+
+
 /* desktop styles for screen larger than 767px */
 @media (min-width: 768px) {
   header {
@@ -358,6 +363,7 @@ footer {
     justify-content: space-around;
     margin: auto;
     width: 75%;
+    list-style-type: none;
   }
 
   .list-item-container {
