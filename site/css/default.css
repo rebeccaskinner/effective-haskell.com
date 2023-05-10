@@ -213,7 +213,6 @@ nav a {
   flex-direction: column;
   padding: 0.5rem;
   margin-top: 1rem;
-  height: auto;
 }
 
 .section-title {
@@ -237,7 +236,6 @@ nav a {
   flex-direction: column;
   padding: 0.5rem;
   margin-top: 1rem;
-  height: auto;
 }
 
 .list-heading-container {
@@ -310,6 +308,7 @@ footer {
     flex-direction: row;
     padding: 0;
     margin: 2rem 0 2rem 0;
+    height: 50vh;
   }
 
   .section-title {
@@ -319,7 +318,8 @@ footer {
   }
 
   .section-content {
-    margin: 1rem 0.8rem;
+    padding: 1rem 0.8rem;
+    margin: auto;
     width: 50%;
   }
   
@@ -329,15 +329,19 @@ footer {
     text-align: center;
   }
 
+  .list-section {
+    height: 50vh;
+  }
+
   .list-container {
     justify-content: space-around;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     width: 75%;
   }
 
   .list-item {
-    width: 50%;
+    width: 40%;
     margin: 0;
+    padding: 1rem;
   }
 }
