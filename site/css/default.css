@@ -28,11 +28,20 @@ body {
 }
 
 h1,
-h2,
+h2 {
+  font-family: "golos-black", Arial, Helvetica, sans-serif;
+  font-size: x-large;
+  font-weight: bolder;
+  margin: 1rem 0;
+}
+
 h3,
 h4,
 h5,
 h6 {
+  font-family: "golos-bold", Arial, Helvetica, sans-serif;
+    font-size: large;
+    font-weight: bold;
   margin: 1rem 0;
 }
 
@@ -196,7 +205,7 @@ nav a {
 
 .beta-disclaimer {
   margin: 0;
-  text-align: center;
+  text-align: left;
 }
 
 .html-open-icon {
@@ -322,6 +331,18 @@ footer {
     margin: auto;
     width: 50%;
   }
+
+  .headline-content {
+    font-family: "golos-bold", Arial, Helvetica, sans-serif;
+    font-size: larger;
+    font-weight: bold;
+  }
+
+  .headline-content-black {
+    font-family: "golos-black", Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    font-weight: bolder;
+  }
   
   .section-image-container {
     max-width: 50%;
@@ -339,9 +360,20 @@ footer {
     width: 75%;
   }
 
-  .list-item {
+  .list-item-container {
+    display: flex;
+    align-items: center;
     width: 40%;
     margin: 0;
     padding: 1rem;
+    list-style-type: none;
+  }
+
+  .list-icon {
+    margin-right: 1rem;
+  }
+
+  .purple-icon {
+    color: rgba(118,67,169,1)
   }
 }
