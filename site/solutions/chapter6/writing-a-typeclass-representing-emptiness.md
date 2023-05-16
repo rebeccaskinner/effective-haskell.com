@@ -3,7 +3,7 @@ chapter: 6
 exercise-id: 1
 name: Writing Typeclass Representing Emptiness
 summary: "
-Summary TBD
+The first exercise in chapter 6
 "
 ---
 

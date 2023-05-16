@@ -3,7 +3,7 @@ chapter: 6
 exercise-id: 2
 name: Adding a Default Null Test
 summary: "
-Summary TBD
+The second exercise in Chapter 6
 "
 ---
 
@@ -144,7 +144,58 @@ that we can use, but it requires that we add a new language extension.
 
 #### Using DefaultSignatures
 
-The `DefaultSignatures` extension
+The `DefaultSignatures` extension gives us another way to solve the
+problem. In this chapter you saw how this extension allows you to add a default
+value to a typeclass that has narrower constraints than the type defined by the
+class. In this case, we can use the extension to provide a default
+implementation of `isNull` only when the `Nullable` value has an `Eq`
+instance. Let's take a look:
+
+```haskell
+{-# LANGUAGE DefaultSignatures #-}
+module EffectiveHaskell.Exercises.Chapter6.DefaultSignaturesNull where
+import Prelude hiding (null)
+
+class Nullable a where
+  isNull :: a -> Bool
+
+  default isNull :: Eq a => a -> Bool
+  isNull = (== null)
+  null :: a
+```
+
+With `DefaultSignatures` enabled we're able to add a default definition of
+`isNull` that works by comparing the input value to `null`, just like
+`isNullHelper` from our earlier example. Like our other examples, we can still
+create instances that provide a definition of `isNull`. If the type we're
+defining a `Nullable` instance for doesn't have an instance of `Eq` we're
+required to provide on:
+
+```haskell
+instance (Nullable a, Nullable b) => Nullable (a,b) where
+  isNull (a,b) = isNull a && isNull b
+  null = (null, null)
+```
+
+If, on the other hand, we do have an `Eq` constraint then we're free to provide
+our own definition of `isNull`:
+
+```haskell
+instance (Eq a, Nullable a) => Nullable (Maybe a) where
+  isNull Nothing = True
+  isNull (Just a) = isNull a
+  null = Nothing
+```
+
+Alternatively, we can use the default version:
+
+```haskell
+instance Eq a => Nullable [a] where
+  null = []
+```
+
+
+
 
 </details>
 </div>
