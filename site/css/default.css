@@ -1,7 +1,31 @@
+@font-face {
+  font-family: 'Inter Regular';
+  font-style: normal;
+  src: url('./fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Inter Medium';
+  src: url('./fonts/Inter-Medium.woff2') format('woff2');
+  font-weight: 500;
+
+}
+
+@font-face {
+  font-family: 'Inter Thin';
+  src: url('./fonts/Inter-Thin.woff2') format('woff2');
+  font-weight: 100;
+}
+
 @media (min-width: 768px) {
   .mobile-hero .mobile-nav {
     visibility: hidden;
   }
+}
+
+.page-title {
+  font-family: 'Inter Medium';
 }
 
 html, body {
@@ -10,10 +34,19 @@ html, body {
   max-width: 100%;
   overflow-x: hidden;
   margin: 0;
+  font-family: "Inter Thin" !important;
 }
 
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: "Inter Medium";
+}
+
+h4, h5, h6 {
+  font-family: "Inter Regular" !important;
 }
 
 h2 {
