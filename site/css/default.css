@@ -82,9 +82,7 @@ footer {
   height: 50px;
 }
 
-.beta-badge {
-  color: #DDA0DD;
-  border: 1px solid #DDA0DD;
+.beta-badge, .feature-badge, .coming-soon-badge {
   width: fit-content;
   padding: 4px 14px;
   text-transform: capitalize;
@@ -93,6 +91,16 @@ footer {
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
+}
+
+.beta-badge, .feature-badge {
+  color: #DDA0DD;
+  border: 1px solid #DDA0DD;
+}
+
+.coming-soon-badge {
+  color: #B6BCF1;
+  border: 1px solid #B6BCF1;
 }
 
 .mobile-beta-badge {
@@ -120,6 +128,10 @@ footer {
 
 .font-haskell-pink {
   color: #DDA0DD;
+}
+
+.font-haskell-light-lav {
+  color: #B6BCF1;
 }
 
 .mobile-nav {
@@ -165,9 +177,16 @@ footer {
   -o-border-radius: 20px;
 }
 
-.book-image {
+.book-image-sm {
   margin-left: -10px;
   height: 200px;
+}
+
+.book-image {
+  margin-left: 90px;
+  width: 75%;
+  position: relative;
+  z-index: 1;
 }
 
 .note-from-us-container {
@@ -180,11 +199,30 @@ footer {
   font-weight: 600;
 }
 
+.note-from-us-content, .final-beta-content {
+  margin: 12px 0 24px 0;
+}
+
 .cta-white {
   text-decoration: none;
   color: #ffffff;
   padding: 6px 24px;
   border: 2px solid #ffffff;
+  border-radius: 25px;
+  font-weight: 600;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+}
+
+.cta-pink {
+  text-decoration: none;
+  color: #DDA0DD;
+  display: block;
+  padding: 16px 40px;
+  border: 2px solid #DDA0DD;
+  text-align: center;
   border-radius: 25px;
   font-weight: 600;
   -webkit-border-radius: 25px;
@@ -256,4 +294,99 @@ footer {
 
 .programming-method-card-content {
   text-align: center;
+}
+
+.programming-method-section {
+  width: auto;
+  height: 300px;
+
+}
+
+.early-access-features-section, .coming-soon-features-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 28px 0 0 16px;
+}
+
+.early-access-features-section {
+  background-color: #dea1de4f;
+  margin-top: 250px;
+}
+
+.coming-soon-features-section {
+  background-color: #b6bcf178;
+  margin-top: -200px;
+}
+
+.card-container {
+  display: flex;
+  overflow-x: auto !important;
+  margin: 10px 0 32px 0;
+  white-space: nowrap;
+  -ms-overflow-style: none; /* Hide the scrollbar for MS Edge */
+  scrollbar-width: none; /* Hide the scrollbar for Mozilla Firefox */
+  width: 100vw;
+  height: fit-content;
+}
+
+#carousel::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar on Webkit based browsers (Chrome, Safari, etc) */
+  -webkit-overflow-scrolling: touch; /* On touch screens the content continues to scroll for a while after finishing the scroll gesture */
+}
+
+.feature-card {
+  background-color: #dea1de1c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px !important;
+  padding: 8px;
+  margin: 8px;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+}
+
+.feature-card-content {
+  white-space: normal;
+  width: 180px;
+  display: flex;
+  padding: 12px;
+}
+
+.card-section-title {
+  padding-top: 16px;
+}
+
+.order-now-section-background {
+  position: relative;
+  background-image: url('../images/rshaskell_silo\ 1.png');
+  background-position: 50% top;
+  background-repeat: no-repeat;
+  height: fit-content;
+  background-size: 80vh;
+  mix-blend-mode: screen;
+  padding: 0 0 32px 0;
+}
+
+.order-now-section-container {
+  width: 100%;
+  text-align: center;
+}
+
+.order-now-section {
+  position: relative;
+  background-image: radial-gradient(farthest-corner at 50% 50%, #410e60 0%, #100912 100%);
+  background-blend-mode: screen;
+}
+
+.order-now-section-content {
+  text-align: left;
+  background-color: transparent;
+  height: fit-content;
+  padding: 0 4% 4% 4%;
 }
