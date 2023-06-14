@@ -56,7 +56,7 @@ h2 {
 }
 
 h3 {
-  font-size: 32px;
+  font-size: 28px;
   line-height: 40px;
   font-weight: 700;
 }
@@ -428,6 +428,10 @@ li > a:visited {
 
 .card-section-title {
   padding-top: 16px;
+}
+
+.desktop-order-now-section {
+  display: none;
 }
 
 .mobile-order-now-section-background, .desktop-order-now-section-background {
