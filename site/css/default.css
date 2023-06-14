@@ -1,35 +1,25 @@
 @font-face {
-  font-family: 'Inter Regular';
+  font-family: "InterRegular";
   font-style: normal;
-  src: url('./fonts/Inter-Regular.woff2') format('woff2');
+  src: url('./fonts/Inter-Regular.woff2') format('woff2'), url('./fonts/Inter-Regular.ttf')  format('truetype');
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'Inter Medium';
-  src: url('./fonts/Inter-Medium.woff2') format('woff2');
+  font-family: "InterMedium";
+  src: url('./fonts/Inter-Medium.woff2') format('woff2'), url('./fonts/Inter-Medium.ttf')  format('truetype');
   font-weight: 500;
 
 }
 
 @font-face {
-  font-family: 'Inter Thin';
-  src: url('./fonts/Inter-Thin.woff2') format('woff2');
+  font-family: "InterThin";
+  src: url('./fonts/Inter-Thin.woff2') format('woff2'), url('./fonts/Inter-Thin.ttf') format('truetype');
   font-weight: 100;
 }
 
-@media (min-width: 768px) {
-  .mobile-hero .mobile-nav {
-    visibility: hidden;
-  }
-}
-
-.nav {
-  display: flex;
-}
-
 .page-title {
-  font-family: 'Inter Medium';
+  font-family: "InterMedium", "Open Sans", sans-serif;
 }
 
 ul, li {
@@ -44,7 +34,7 @@ html, body {
   max-width: 100%;
   overflow-x: hidden;
   margin: 0;
-  font-family: "Inter Thin" !important;
+  font-family: "InterThin", "Open Sans", sans-serif !important;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -52,11 +42,11 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 h1, h2, h3 {
-  font-family: "Inter Medium";
+  font-family: "InterMedium", "Open Sans", sans-serif !important;
 }
 
 h4, h5, h6 {
-  font-family: "Inter Regular" !important;
+  font-family: "InterRegular", "Open Sans", sans-serif !important;
 }
 
 h2 {
@@ -79,7 +69,7 @@ h6 {
 
 p {
   font-size: 16px;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .main {
@@ -128,6 +118,10 @@ footer {
   margin-top: -100px;
 }
 
+.desktop-hero-image {
+  display: none;
+}
+
 .mobile-margin-left {
   margin-left: 4%;
 }
@@ -146,12 +140,19 @@ footer {
 
 .mobile-nav {
   display: flex;
+}
+
+.nav {
   backdrop-filter: blur(10px);
   height: 110px;
   align-items: center;
   justify-content: space-between;
   width: 90%;
   margin: auto;
+}
+
+.desktop-nav {
+  display: none;
 }
 
 .mobile-menu {
@@ -171,8 +172,8 @@ li > a {
   margin: 0 0 6px 0;
 }
 
-li > a:visited{
-  color: #DDA0DD;
+li > a:visited {
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -186,9 +187,11 @@ li > a:visited{
 
 .mobile-description {
   font-size: 16px;
+  margin: 12px 0 12px 0;
 }
 
 .gradient-blur-section {
+  display: block;
   width: 100%;
   margin-top: -40px;
   height: 70px;
@@ -233,6 +236,7 @@ li > a:visited{
   font-size: 22px;
   line-height: 26px;
   font-weight: 600;
+  margin-top: 20px;
 }
 
 .note-from-us-content, .final-beta-content {
@@ -278,6 +282,7 @@ li > a:visited{
 }
 
 .background-circle-gradient-right {
+  display: block;
   position: relative;
   width: 100%;
   height: 250px;
@@ -290,6 +295,7 @@ li > a:visited{
 }
 
 .background-circle-gradient-left {
+  display: block;
   position: relative;
   width: 100%;
   height: 300px;
@@ -452,4 +458,97 @@ footer {
   color: #DDA0DD;
   height: 50px;
   padding: 20px 4% 10px 4%;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none;
+  }
+
+  .desktop-nav {
+    display: flex;
+  }
+
+  .desktop-nav-container {
+    display: flex;
+    flex-direction: space-between;
+  }
+
+  .desktop-menu {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-item {
+    display: flex;
+    padding: 12px 24px;
+  }
+
+  .page-container {
+    width: 100vw;
+  }
+
+  .mobile-hero {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 40px 40px 0 40px;
+  }
+
+  .page-title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-title-section {
+    position: relative;
+    margin-top: -20px;
+  }
+
+  .mobile-description {
+    width: 56%;
+    line-height: 32px;
+  }
+
+  .mobile-margin-left, .mobile-margin-right {
+    margin: 0;
+  }
+
+  .hero-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .mobile-hero-image {
+    display: none;
+  }
+
+  .desktop-hero-image {
+    display: block;
+    width: 50%;
+  }
+
+  .beta-badge, .feature-badge, .coming-soon-badge {
+    display: flex;
+    /* width: fit-content; */
+    height: fit-content;
+    padding: 4px 14px;
+    text-transform: capitalize;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+  }
+
+  .gradient-blur-section {
+    display: none;
+  }
+
+  .background-circle-gradient-right {display: none;}
+  .background-circle-gradient-left {display: none;}
+
 }
