@@ -110,11 +110,12 @@ footer {
 }
 
 .mobile-hero {
-  width: 100%;
+  /* width: 100%; */
 }
 
 .mobile-hero-image {
-  width: 100%;
+  height: 320px;
+  width: auto;
   margin-top: -100px;
 }
 
@@ -200,7 +201,7 @@ li > a:visited {
   -webkit-filter: blur(12px);
 }
 
-.section-note-from-us {
+.mobile-section-note-from-us {
   position: relative;
   z-index: 1;
   height: 100%;
@@ -214,6 +215,10 @@ li > a:visited {
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
+}
+
+.desktop-section-note-from-us {
+  display: none;
 }
 
 .book-image-sm {
@@ -281,6 +286,11 @@ li > a:visited {
   margin: 0 auto;
 }
 
+.cta-medium {
+  padding: 16px 32px;
+  width: 30%;
+}
+
 .background-circle-gradient-right {
   display: block;
   position: relative;
@@ -307,11 +317,15 @@ li > a:visited {
   -webkit-filter: blur(50px);
 }
 
-.magic-macbook {
+.magic-macbook-mobile {
   width: 100%;
   top: -375px;
   position: relative;
   z-index: 1;
+}
+
+.magic-macbook-desktop {
+  display: none;
 }
 
 .programming-method-section {
@@ -351,7 +365,6 @@ li > a:visited {
 .programming-method-section {
   width: auto;
   height: 300px;
-
 }
 
 .early-access-features-section, .coming-soon-features-section {
@@ -417,7 +430,7 @@ li > a:visited {
   padding-top: 16px;
 }
 
-.order-now-section-background {
+.mobile-order-now-section-background, .desktop-order-now-section-background {
   position: relative;
   background-image: url('../images/rshaskell_silo\ 1.png');
   background-position: 50% top;
@@ -428,18 +441,18 @@ li > a:visited {
   padding: 0 0 32px 0;
 }
 
-.order-now-section-container {
+.mobile-order-now-section-container, .desktop-order-now-section-container {
   width: 100%;
   text-align: center;
 }
 
-.order-now-section {
+.mobile-order-now-section {
   position: relative;
   background-image: radial-gradient(farthest-corner at 50% 50%, #410e60 0%, #100912 100%);
   background-blend-mode: screen;
 }
 
-.order-now-section-content {
+.mobile-order-now-section-content {
   text-align: left;
   background-color: transparent;
   height: fit-content;
@@ -460,6 +473,17 @@ footer {
   padding: 20px 4% 10px 4%;
 }
 
+.blue-gradient-background-right {
+  display: none;
+}
+
+.purple-gradient-background-left {
+  display: none;
+}
+
+
+
+
 @media (min-width: 768px) {
   .mobile-nav {
     display: none;
@@ -467,6 +491,8 @@ footer {
 
   .desktop-nav {
     display: flex;
+    position: relative;
+    z-index: 2;
   }
 
   .desktop-nav-container {
@@ -491,10 +517,15 @@ footer {
   }
 
   .mobile-hero {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    width: 50%;
     margin: 40px 40px 0 40px;
+  }
+
+  .mobile-hero-content {
+    width: 100%;
+    display: flex;
   }
 
   .page-title {
@@ -519,7 +550,7 @@ footer {
   .hero-content {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
   }
 
   .mobile-hero-image {
@@ -528,12 +559,15 @@ footer {
 
   .desktop-hero-image {
     display: block;
+    position: relative;
+    z-index: 1;
     width: 50%;
+    margin-top: -150px;
   }
 
   .beta-badge, .feature-badge, .coming-soon-badge {
     display: flex;
-    /* width: fit-content; */
+    width: fit-content;
     height: fit-content;
     padding: 4px 14px;
     text-transform: capitalize;
@@ -550,5 +584,188 @@ footer {
 
   .background-circle-gradient-right {display: none;}
   .background-circle-gradient-left {display: none;}
+  
+  .mobile-section-note-from-us {
+    display: none;
+  }
 
+  .desktop-section-note-from-us {
+    width: 90%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    background: #653e7086;
+    border-radius: 20px;
+    padding: 0 15px 30px 0;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+  }
+
+  .blue-gradient-background-right {
+    display: block;
+    position: absolute;
+    width: 60%;
+    height: 600px;
+    right: 0px;
+    top: 0px;
+    background-image: radial-gradient(farthest-corner at 400px 900px, #1FC3E7 0%, #1F34E7 100%);
+    opacity: 0.35;
+    filter: blur(125px);
+    -webkit-filter: blur(125px);
+}
+
+  .purple-gradient-background-left, .purple-gradient-background-bottom-left {
+    display: block;
+    position: absolute;
+    background-image: radial-gradient(farthest-corner at 20px 30px, #9B1FE7 0%, #100912 100%);
+    opacity: 0.4;
+    filter: blur(50px);
+    -webkit-filter: blur(50px);
+  }
+
+  .purple-gradient-background-left {
+    width: 60%;
+    height: 900px;
+    /* left: -50px; */
+    top: 300px;
+  }
+
+  .purple-gradient-background-bottom-left {
+    width: 100%;
+    height: 900px;
+    /* left: -50px; */
+    top: 0px;
+  }
+
+  .innovative-programming-section {
+    display: flex;
+    margin-bottom: 80px;
+    margin-top: -100px
+  }
+
+  .programming-method-section {
+    margin: 0;
+    position: absolute;
+    z-index: 1;
+    width: 40%;
+    left: 58%;
+  }
+  
+  .programming-method-content-section {
+    position: relative;
+    top: 125px;
+  }
+
+  .magic-macbook-mobile {
+    display: none;
+  }
+
+  .magic-macbook-desktop {
+    display: block;
+    width: 60%;
+    margin: 0;
+    top: 50px;
+    position: relative;
+    z-index: 0;
+    object-fit: contain;
+  }
+
+  .programming-method-card-container {
+    display: flex;
+    margin-top: 40px;
+  }
+
+  .programming-method-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    height: 280px;
+    margin: 20px 12px 0 0;
+  }
+
+  h3 {
+    font-size: 42px;
+  }
+
+  .early-access-features-section, .coming-soon-features-section {
+    margin: 40px;
+    padding: 30px 60px 0px 60px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto !important;
+    margin: 40px 0 40px 0;
+    width: 100%;
+    height: fit-content;
+    gap: 4%;
+  }
+
+  .feature-card {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  .mobile-order-now-section {
+    display: none;
+  }
+
+  .desktop-order-now-section {
+    display: flex;
+  }
+
+  .desktop-order-now-section-background {
+    margin-top: -60px;
+    width: 100%;
+    background-image: url('../images/rshaskell-silo-desktop-base.png');
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: fill;
+    height: fit-content;
+    mix-blend-mode: screen;
+    position: relative;
+    z-index: 1;
+    top: -50px;
+  }
+
+  .desktop-order-now-section-content {
+    width: 100%;
+    margin: 175px 120px;
+    background-color: transparent;
+  }
+
+  .desktop-book-image {
+    margin: 200px auto;
+    right: 150px;
+    position: relative;
+    z-index: 1;
+    left: 150px;
+    height: 450px;
+  }
+
+  footer {
+    display: flex;
+    justify-content: end;
+    position: relative;
+    top: -80px;
+    width: 90vw;
+  }
+
+  .final-beta-content {
+    width: 80%;
+    margin: 20px 0 30px 0;
+  }
 }
