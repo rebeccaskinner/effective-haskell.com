@@ -776,7 +776,7 @@ footer {
 }
 
 /* table of contents page styling */
-.chapter-page-content-container, .chapters-toc-body {
+.chapter-page-content-container, .chapters-toc-body, .secondary-page-title, .solution-container, .projects-container {
   margin: 1% 4%;
 }
 
@@ -786,7 +786,7 @@ footer {
   gap: 32px;
 }
 
-.chapters-toc-body > ul {
+.chapters-toc-body > ul, .projects-container {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -800,11 +800,11 @@ footer {
   padding: 24px;
 }
 
-h1 > a, .chapter-toc-exercise-link > a, .chapter-toc-preview-link > a {
+h1 > a, .chapter-toc-exercise-link > a, .chapter-toc-preview-link > a, .solution-heading > a {
   color: #DDA0DD;
 }
 
-h1 > a:visited, .chapter-toc-exercise-link > a:visited, .chapter-toc-preview-link > a {
+h1 > a:visited, .chapter-toc-exercise-link > a:visited, .chapter-toc-preview-link > a:visited, .solution-heading > a:visited {
   color: #9B1FE7;
 }
 
@@ -832,4 +832,8 @@ summary, summary > p, details > p, details > ul > li {
 
 .exercise-summary {
   margin: 12px 0 24px 0;
+}
+
+.secondary-page-title, .chapter-page-content-container, .solution-container, .projects-container {
+  padding: 0 24px;
 }
