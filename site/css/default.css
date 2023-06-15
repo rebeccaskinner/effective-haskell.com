@@ -634,14 +634,12 @@ footer {
   .purple-gradient-background-left {
     width: 60%;
     height: 900px;
-    /* left: -50px; */
     top: 300px;
   }
 
   .purple-gradient-background-bottom-left {
     width: 100%;
     height: 900px;
-    /* left: -50px; */
     top: 0px;
   }
 
@@ -764,7 +762,6 @@ footer {
     display: flex;
     justify-content: end;
     position: relative;
-    top: -80px;
     width: 90vw;
   }
 
@@ -772,4 +769,63 @@ footer {
     width: 80%;
     margin: 20px 0 30px 0;
   }
+}
+
+/* table of contents page styling */
+.chapter-page-content-container, .chapters-toc-body {
+  margin: 1% 4%;
+}
+
+.chapter-page-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.chapters-toc-body > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.chapter-toc-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 300px;
+  padding: 24px;
+}
+
+h1 > a, .chapter-toc-exercise-link > a, .chapter-toc-preview-link > a {
+  color: #DDA0DD;
+}
+
+h1 > a:visited, .chapter-toc-exercise-link > a:visited, .chapter-toc-preview-link > a {
+  color: #9B1FE7;
+}
+
+div.sourceCode {
+  margin: 64px 0;
+  padding: 48px;
+}
+
+pre {
+  margin: 64px 0;
+  padding: 48px;
+  color: #b0b0b0;
+  background-color: #1a1a1aa1;
+}
+
+.chapter-page-solution-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+summary, summary > p, details > p, details > ul > li {
+  margin-bottom: 16px;
+}
+
+.exercise-summary {
+  margin: 12px 0 24px 0;
 }
