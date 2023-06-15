@@ -582,6 +582,10 @@ footer {
     -o-border-radius: 6px;
   }
 
+  .hero-content > .beta-badge {
+    margin-bottom: 24px;
+  }
+
   .gradient-blur-section {
     display: none;
   }
