@@ -356,5 +356,20 @@ True
 True
 ```
 
+Success! It appears that `OptionalNonEmptyString` is now using the same behavior
+as `TransitiveNullable`.
+
+You might have noticed that, in practice, using `deriving via` in this case
+didn't buy us much- it seems as though we've actually done more work by creating
+the generic types and then deriving our instances from them instead of creating
+instances for `OptionalString` and `OptionalNonEmptyString` directly. In this
+case it's true, but as soon as we need a second, third, or fourth type that
+would have the same boilerplate implementation of a type class, then we'll have
+saved ourselves some effort. Realistically, it's not always clear when you'll
+want to reuse some definition of a typeclass, so you might find that instead of
+creating the generic reusable types to start with, you recognize that you have
+the same definition in multiple places and instead factor those out into a
+common definition that you can use with `deriving via`.
+
 </details>
 </div>
