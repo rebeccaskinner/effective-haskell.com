@@ -128,6 +128,12 @@ instance Nullable [a] where
 
   null = []
 ```
+
+Since we have no guarantee that `a` has a `Nullable` instance, we can't consider
+its value when we're thinking about what might constitute a null list. With only
+the shape of the list to consider, the only sensible choice is to make `null`
+and empty list. Thanks to pattern matching, we can write a version of `isNull`
+that doesn't require an `Eq` instance for `a`.
 </details>
 
 </div>

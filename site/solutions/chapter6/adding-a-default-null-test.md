@@ -194,8 +194,13 @@ instance Eq a => Nullable [a] where
   null = []
 ```
 
-
-
+In the last exercise you saw that we were able to avoid having an `Eq` instance
+when we defined `isNull` for lists thanks to pattern matching. To use the
+default instance, we need to add it. This is a good example of the tradeoffs
+that you'll want to think about when defining default instances. Ideally, if
+you're using `DefaultSignatures` to add constraints to the default
+implementation of a function, you'll be adding common constraints that well come
+"for free" for at least some implementations.
 
 </details>
 </div>

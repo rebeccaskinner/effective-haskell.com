@@ -12,7 +12,6 @@ build-type:     Simple
 
 library
   exposed-modules:
-      EffectiveHaskell.BonusContent.Chapter6.DefaultSignatures
       EffectiveHaskell.Exercises.Chapter1.Factorial
       EffectiveHaskell.Exercises.Chapter1.Fibonacci
       EffectiveHaskell.Exercises.Chapter1.ManualCurrying
@@ -36,6 +35,7 @@ library
       EffectiveHaskell.Exercises.Chapter6.DefaultHelperNull
       EffectiveHaskell.Exercises.Chapter6.DefaultNull
       EffectiveHaskell.Exercises.Chapter6.DefaultSignaturesNull
+      EffectiveHaskell.Exercises.Chapter6.DerivingNullable
       EffectiveHaskell.Exercises.Chapter6.NullableExercise
   other-modules:
       Paths_solution_code
@@ -68,6 +68,7 @@ test-suite test
       EffectiveHaskell.Exercises.Chapter1.ManualCurryingSpec
       EffectiveHaskell.Exercises.Chapter2.ReverseWithFoldSpec
       EffectiveHaskell.Exercises.Chapter2.ZippingListsSpec
+      EffectiveHaskell.Exercises.Chapter6.DerivingNullableSpec
       Paths_solution_code
   autogen-modules:
       Paths_solution_code
