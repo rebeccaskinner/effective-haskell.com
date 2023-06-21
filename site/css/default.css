@@ -82,6 +82,14 @@ footer {
   height: 50px;
 }
 
+footer > ul > li > a {
+  color: #ffffff
+}
+
+.daniel-perkins:hover {
+  text-decoration: wavy underline;
+}
+
 .beta-badge, .feature-badge, .coming-soon-badge {
   width: fit-content;
   padding: 4px 14px;
