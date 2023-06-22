@@ -450,7 +450,7 @@ li > a:visited {
 
 .mobile-order-now-section-background, .desktop-order-now-section-background {
   position: relative;
-  background-image: url('../images/rshaskell_silo\ 1.png');
+  /*background-image: url('../images/rshaskell_silo\ 1.png');*/
   background-position: 50% top;
   background-repeat: no-repeat;
   height: fit-content;
