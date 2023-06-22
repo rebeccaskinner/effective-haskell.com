@@ -1,26 +1,30 @@
 @font-face {
   font-family: "InterRegular";
   font-style: normal;
-  src: url('./fonts/Inter-Regular.woff2') format('woff2'), url('./fonts/Inter-Regular.ttf')  format('truetype');
+  /*src: url('./fonts/Inter-Regular.woff2') format('woff2'), url('./fonts/Inter-Regular.ttf')  format('truetype');*/
+  src: url('/fonts/Inter-Regular.woff2') format('woff2'), url('/fonts/Inter-Regular.ttf')  format('truetype');
   font-weight: 400;
 }
 
 @font-face {
   font-family: "InterMedium";
-  src: url('./fonts/Inter-Medium.woff2') format('woff2'), url('./fonts/Inter-Medium.ttf')  format('truetype');
+  /*src: url('./fonts/Inter-Medium.woff2') format('woff2'), url('./fonts/Inter-Medium.ttf')  format('truetype');*/
+  src: url('/fonts/Inter-Medium.woff2') format('woff2'), url('/fonts/Inter-Medium.ttf')  format('truetype');
   font-weight: 500;
 
 }
 
 @font-face {
   font-family: "InterThin";
-  src: url('./fonts/Inter-Thin.woff2') format('woff2'), url('./fonts/Inter-Thin.ttf') format('truetype');
+  /*src: url('./fonts/Inter-Thin.woff2') format('woff2'), url('./fonts/Inter-Thin.ttf') format('truetype');*/
+  src: url('/fonts/Inter-Thin.woff2') format('woff2'), url('/fonts/Inter-Thin.ttf') format('truetype');
   font-weight: 100;
 }
 
 @font-face {
   font-family: "FiraCode";
-  src: url('./fonts/FiraCode-Regular.ttf') format('truetype');
+  /*src: url('./fonts/FiraCode-Regular.ttf') format('truetype');*/
+  src: url('/fonts/FiraCode-Regular.ttf') format('truetype');
   font-weight: 100;
 }
 
