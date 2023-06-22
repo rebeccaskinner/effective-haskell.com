@@ -20,8 +20,13 @@ looking up a particular user, and getting information about a user.
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 You may want to rethink the export list from the module. Do you need to export
 more things if you break the module up? Are there ways around that?
+</div>
+</div>
 </details>
 </div>
 
@@ -31,6 +36,9 @@ more things if you break the module up? Are there ways around that?
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 If we review the final version of our `UserInfo` module from Chapter 5, you'll
 see that our module is doing several different things:
@@ -259,5 +267,7 @@ a higher level module that has a more restrictive export list than the lower
 level modules it re-exports from is likely the most common and has the best
 ergonomics.
 
+</div>
+</div>
 </details>
 </div>

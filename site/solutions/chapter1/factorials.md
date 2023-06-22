@@ -38,27 +38,41 @@ test your implementation in `ghci` and compare its output to the example:
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 Remember that a recursive function needs both a _base case_ that tells the
 function to stop calling itself, and a _recursive case_ where the function calls
 itself with a smaller value.
 
 The _base case_ for your factorial function is when the number you are
 calculating is less than, or equal to, one.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 In the _recursive case_ of your function, you need to multiply the current
 number by the _next smallest factorial_.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 You can solve this problem using either `if` expressions or _guards_
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 Imagine that we'd use parentheses in the `factorial` example. We might have
 written it like this:
 
@@ -68,6 +82,8 @@ factorial 5 = 5 * (4 * (3 * (2 * 1)))
 
 Think about what function would represent the value inside of each set of
 parentheses.
+</div>
+</div>
 </details>
 </div>
 
@@ -76,6 +92,8 @@ parentheses.
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 You can implement this function using either an `if` expression or a
 guard. We'll look at both solutions, starting with the solution that uses an
 `if` expression.
@@ -118,5 +136,7 @@ factorial n
   | n <= 1 = 1
   | otherwise = n * factorial (n - 1)
 ```
+</div>
+</div>
 </details>
 </div>

@@ -22,8 +22,13 @@ find out about more ways that you can effectively format your documentation.
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 There's no trick to this question, it's merely a chance for you to get practice
 writing documentation.
+</div>
+</div>
 </details>
 </div>
 
@@ -33,6 +38,9 @@ writing documentation.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Here's an example of our refactored `User` module:
 
 ```haskell
@@ -103,5 +111,7 @@ testUserPassword user passwordAttempt =
   passwordAttempt == userPassword user
 ```
 
+</div>
+</div>
 </details>
 </div>

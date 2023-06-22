@@ -39,14 +39,24 @@ and you should not need to write any additional functions.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Even though `Div` is the only operation that might fail, you'll need to return
 an `Either` value for any operation.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Remember that if you make a recursive call to `safeEval` you'll need to deal
 with the fact that it will return an `Either` instead of an evaluated `Int`.
+</div>
+</div>
 </details>
 </div>
 
@@ -56,6 +66,9 @@ with the fact that it will return an `Either` instead of an evaluated `Int`.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Supporting safe division can be done with a relatively minor refactor of our
 existing `eval` code. Let's start by copying our `eval` function and renaming
 it, then we can incrementally refactor it to support the behavior we want.
@@ -227,5 +240,7 @@ Left "Error: division by zero"
 Right 3
 ```
 
+</div>
+</div>
 </details>
 </div>

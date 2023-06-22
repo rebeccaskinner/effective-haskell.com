@@ -20,6 +20,9 @@ lists?
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Try stepping through this function manually:
 
 ```haskell
@@ -32,13 +35,20 @@ findFirstEvenFoldl =
       then [x]
       else result
 ```
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 We can use `foldr` with inifite lists because we are able to stop processing
 without trying to consume the entire list. Is this applicable with large but
 finite lists?
+</div>
+</div>
 </details>
 
 ### Solution
@@ -46,6 +56,9 @@ finite lists?
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Let's imagine that we want to write a function that finds the first even element
 in a possibly infinite list using `foldl`. We've seen solutions to similar
@@ -256,5 +269,7 @@ benefit from a left fold, be sure to use `foldl'` instead of plain
 `foldl`. These functions work identically, but `foldl'` is optimized and should
 generally result in using less memory.
 
+</div>
+</div>
 </details>
 </div>

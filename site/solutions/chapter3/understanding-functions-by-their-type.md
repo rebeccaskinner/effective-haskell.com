@@ -26,9 +26,14 @@ ways you could have implemented them? Why or why not?
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Remember that, without any other information, you can't create a value for a
 general polymorphic type like `a` or `b` since you don't know what type of value
 you should create.
+</div>
+</div>
 </details>
 </div>
 
@@ -38,6 +43,9 @@ you should create.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 The `swap` function has a straightforward implementation that closely resembles
 it's type. Let's start by taking a look at the simplest implementation:
@@ -83,10 +91,15 @@ in the correct order. Since `a` and `b` could be anything, we can't create a new
 value for them (what value would we create?). The only way to return a value of
 type `a` is to use the one that was given to us. Same for values of type `b`.
 
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Like `swap`, there's an obvious definition of `concat` that we can start
 with. Since `concat` is part of `Prelude` if you are following along you'll need
@@ -200,10 +213,15 @@ types that have structure or support operations that might lead to us doing
 recursion or pattern matching, then we introduce the possibility of infinite
 recursion, partial pattern matches, and generally having functions that behave
 differently in various edge cases.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 The final example we need to evaluate is the `id` function. Like `concat` this
 is defined in `Prelude` so you'll need to either name your function something
@@ -233,6 +251,8 @@ return them since the type of `id` resticts what we can return. Thanks to lazy
 evaluation, any intermediate values that aren't used won't be computed, so they
 aren't likely to even change the unobservable behavior of the function.
 
+</div>
+</div>
 </details>
 
 </div>

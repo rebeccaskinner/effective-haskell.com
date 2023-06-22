@@ -37,6 +37,11 @@ Create instances of this typeclass for:
 <details>
 <summary>Click to reveal</summary>
 
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
 </details>
 </div>
 
@@ -46,6 +51,9 @@ Create instances of this typeclass for:
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 The first part of our exercise presents us with a problem that has more than one
 solution. We're asked to write an instance of `Nullable` for a `Maybe`
@@ -89,10 +97,15 @@ instance Nullable a => Nullable (Maybe a) where
 This version of our instance lets us account for the fact that even if we have a
 `Just` value, it might be something that's still empty.
 
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 The next part of the exercise asks us to write a `Nullable` instance for a
 tuple. Unlike the `Maybe` instance we wrote earlier, tuple's don't have any
@@ -109,10 +122,15 @@ In this example, we're considering a tuple to be `null` if both elements of the
 tuple are `null`. This tells us both how to create a new `null` tuple, and how
 to test to see if an existing tuple is `null`.
 
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 The final part of this exercise asks us to write an instance that will work for
 any list type. This problem is complementary to the instance we wrote for
 `Maybe`. Although we could have written an instance for `Maybe a` that didn't
@@ -134,6 +152,8 @@ its value when we're thinking about what might constitute a null list. With only
 the shape of the list to consider, the only sensible choice is to make `null`
 and empty list. Thanks to pattern matching, we can write a version of `isNull`
 that doesn't require an `Eq` instance for `a`.
+</div>
+</div>
 </details>
 
 </div>

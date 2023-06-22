@@ -22,6 +22,11 @@ With this change in place, create a default implementation of `isNull`.
 <details>
 <summary>Click to reveal</summary>
 
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
 </details>
 </div>
 
@@ -30,6 +35,9 @@ With this change in place, create a default implementation of `isNull`.
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 This exercise asks us to add an `Eq` constraint to `Nullable` and use that to
 allow us to write a default definition of `isNull`. This is a pretty small
@@ -202,5 +210,7 @@ you're using `DefaultSignatures` to add constraints to the default
 implementation of a function, you'll be adding common constraints that well come
 "for free" for at least some implementations.
 
+</div>
+</div>
 </details>
 </div>

@@ -30,12 +30,20 @@ list comprehensions.  Can you implement `zipWith` using
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 You can use pattern matching to easily figure out if either of the lists that
 you are zipping is empty.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 The `zip` and `zipWith` functions in `Prelude` always return a list as long as
 the _shortest_ input list. If either list is empty, they return an empty
 list. Let's look at a couple of examples:
@@ -50,10 +58,15 @@ list. Let's look at a couple of examples:
 λ zip [1] [2..100]
 [(1,2)]
 ```
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Implementing `zipWith` using list comprehensions will be tricky. Remember that
 by default a list comprehension will generate every combination of elements:
@@ -64,6 +77,8 @@ by default a list comprehension will generate every combination of elements:
 ```
 
 Can you think of any ways to work around this?
+</div>
+</div>
 </details>
 </div>
 
@@ -72,6 +87,9 @@ Can you think of any ways to work around this?
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 As you might expect, it's possible to implement `zipWith` with manual recursion,
 `foldl`, or using a list comprehension. In fact, there are several different
@@ -137,10 +155,15 @@ one.
 Now that you've seen how to implement `zipWith` using manual recursion, can you
 do it using `foldl` or a list comprehension? Try it yourself, or click below to
 see the next part of the solution.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Now that you've implemented a manually recursive version of `zipWith`, let's
 move our attention to a version that uses `foldl`. If we're willing to cheat a
@@ -201,10 +224,15 @@ did with our earlier `foldl` implementation.
 Now that you've seen how to implement `zipWith` using both manual recursion and
 `foldl`, you can try to implement it with a list comprehension yourself, or
 expand the solution below.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Now that you've written `zipWith` using both `foldl` and with manual recursion,
 the last task in this exercise is to build a version that uses list
@@ -284,5 +312,7 @@ output. Indexing into a list requires that we traverse the whole list up to the
 element we want, and so repeated indexing ends up being more work than walking
 through the list twice (once for the `foldl` and again for the `reverse`).
 
+</div>
+</div>
 </details>
 </div>

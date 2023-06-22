@@ -37,13 +37,23 @@ There are many other ways we could use undefined to write a version of
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Think about all of the ways that you can η-reduce (eta-reduce) your code when
 the definition of the function is `undefined` .
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 You can also use `undefined` multiple times.
+</div>
+</div>
 </details>
 </div>
 
@@ -52,6 +62,9 @@ You can also use `undefined` multiple times.
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 There are four obvious ways that we might write this function using undefined:
 
@@ -155,5 +168,7 @@ getting a false sense of security when your program compiles. It's useful
 frequently enough that you shouldn't necessarily avoid it altogether, but beware
 of the drawbacks.
 
+</div>
+</div>
 </details>
 </div>

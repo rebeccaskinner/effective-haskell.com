@@ -61,6 +61,9 @@ which type they derive their instance from.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 If you're having trouble imagining how an API like this might be used, imagine
 that you're working with some text data that will be provided by user and you
 need to decide whether a user provided a value or not. In some cases, an empty
@@ -82,20 +85,32 @@ newtype OptionalNonEmptyString = OptionalNonEmptyString { getNonEmptyString :: M
 Instead of writing instances manually, think about how you could provide a way
 for users to use `deriving via` with these types.
 
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 You'll need to create a `newtype` for each of the behaviors you want to make
 available with `deriving via`, along with a `Nullable` instance for each.
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Trying creating two types with `Nullable` instances. First, create a type named
 `BasicNullable` that should have `isNull` return `True` only if there's a
 missing value. Next, create one called `TransitiveNullable` with a definition of
 `isNull` that will return also true if the inner value is null.
+</div>
+</div>
 </details>
 </div>
 
@@ -104,6 +119,9 @@ missing value. Next, create one called `TransitiveNullable` with a definition of
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 We'll start our solution by creating a new module and re-defining
 `Nullable`. We'll go ahead and add the `DerivingVia` extension too, since we're
@@ -371,5 +389,7 @@ creating the generic reusable types to start with, you recognize that you have
 the same definition in multiple places and instead factor those out into a
 common definition that you can use with `deriving via`.
 
+</div>
+</div>
 </details>
 </div>

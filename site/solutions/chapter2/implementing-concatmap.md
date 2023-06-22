@@ -34,16 +34,24 @@ better? Why?
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Remember that you can concatenate two lists using the `(<>)` operator:
 
 ```haskell
 λ [1,2,3] <> [4,5,6]
 [1,2,3,4,5,6]
 ```
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 You can concatenate two lists by folding over them using the `(<>)` operator.
 
@@ -52,11 +60,16 @@ You can concatenate two lists by folding over them using the `(<>)` operator.
 λ concatFoldl [[1,2],[3,4],[5,6]]
 [1,2,3,4,5,6]
 ```
+</div>
+</div>
 </details>
 
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 You can map over a list by applying your function and then adding the result to
 a new list using `(:)`
 
@@ -65,6 +78,8 @@ a new list using `(:)`
 λ mapFoldr (+1) [1..10]
 [2,3,4,5,6,7,8,9,10,11]
 ```
+</div>
+</div>
 </details>
 </div>
 
@@ -73,6 +88,9 @@ a new list using `(:)`
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 We can write `concatMap` easily using either `foldl` or `foldr`. Let's take a
 look at a `foldr` based version first:
 
@@ -133,5 +151,7 @@ implementation:
 [1,1,1,1,1,1,1,1,1,1]
 ```
 
+</div>
+</div>
 </details>
 </div>

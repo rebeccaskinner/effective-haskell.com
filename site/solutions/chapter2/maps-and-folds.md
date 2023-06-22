@@ -22,16 +22,26 @@ change if you used `foldl` instead of `foldr`?
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Try writing out the definitions of `foldr` and `map` individually. Then, write
 out the definition of a function that behaves like `foldr (g . f)`. Are they the
 same?
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 If you're having trouble with this exercise, consider returning to it after
 finishing chapters 3 and 4. Using the type system can help you get a better
 understanding of different functions.
+</div>
+</div>
 </details>
 </div>
 
@@ -40,6 +50,9 @@ understanding of different functions.
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 It turns out that these two examples should always behave exactly the same. In
 the first example, we first use `map f` to transform every element of our list,
@@ -409,5 +422,7 @@ number that's even after mapping. Thanks to laziness and the way `map` and
 `foldr` work, we're able to map and fold over an infinite list and still get out
 a normal value.
 
+</div>
+</div>
 </details>
 </div>

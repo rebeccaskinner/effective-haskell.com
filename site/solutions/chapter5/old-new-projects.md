@@ -20,11 +20,16 @@ of a single example.
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 There aren't any tricks to this question. This is a chance for you to get some
 practice working with cabal files, and to get in the habit of creating proper
 projects before you move on to the larger examples in the rest of the book. Feel
 free to look at the solution for a large example of a cabal file, or refer to
 any of the examples in the chapter.
+</div>
+</div>
 </details>
 </div>
 
@@ -34,6 +39,9 @@ any of the examples in the chapter.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Here's a complete example of the set cabal file that was used to build all of
 the examples and tests for Effective Haskell. You'll notice that in cases where
@@ -365,5 +373,7 @@ test-suite test
     , vector
   default-language: Haskell2010
 ```
+</div>
+</div>
 </details>
 </div>

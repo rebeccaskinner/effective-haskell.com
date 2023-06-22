@@ -18,6 +18,12 @@
   font-weight: 100;
 }
 
+@font-face {
+  font-family: "FiraCode";
+  src: url('./fonts/FiraCode-Regular.ttf') format('truetype');
+  font-weight: 100;
+}
+
 .page-title {
   font-family: "InterMedium", "Open Sans", sans-serif;
 }
@@ -600,7 +606,7 @@ footer {
 
   .background-circle-gradient-right {display: none;}
   .background-circle-gradient-left {display: none;}
-  
+
   .mobile-section-note-from-us {
     display: none;
   }
@@ -668,7 +674,7 @@ footer {
     width: 40%;
     left: 58%;
   }
-  
+
   .programming-method-content-section {
     position: relative;
     top: 125px;
@@ -742,7 +748,8 @@ footer {
   }
 
   .desktop-order-now-section-background {
-    margin-top: -60px;
+    /*margin-top: -60px;*/
+    margin-top: 10px;
     width: 100%;
     background-image: url('../images/rshaskell-silo-desktop-base.png');
     background-position: left bottom;
@@ -753,6 +760,10 @@ footer {
     position: relative;
     z-index: 1;
     top: -50px;
+  }
+  .desktop-order-now-section-background > img {
+      filter: none;
+      opacity: 100%;
   }
 
   .desktop-order-now-section-content {
@@ -816,9 +827,58 @@ h1 > a:visited, .chapter-toc-exercise-link > a:visited, .chapter-toc-preview-lin
   color: #9B1FE7;
 }
 
+
+.chapter-page-contents > a, .chapter-contents-header-link > a, .chapter-page-contents-solution-list > a {
+    color: #DDA0DD;
+    font-size: large;
+    text-decoration: none;
+}
+.chapter-page-contents-solution-list > ul, .chapter-page-contents-solution-list > li {
+  list-style: disc;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+
+.chapter-contents-solution-link > a {
+    color: #DDA0DD;
+    text-decoration: none;
+}
+
+.chapter-page-contents > a:visited, .chapter-contents-header-link > a:visited, .chapter-page-contents-solution-list > a:visited {
+  color: #9B1FE7;
+  font-size: large;
+  text-decoration: none;
+}
+
+.chapter-contents-solution-link > a:visited {
+  color: #9B1FE7;
+  text-decoration: none;
+}
+
+
+code {
+  font-size: large;
+  font-family: "FiraCode", "Open Sans", sans-serif !important;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+
+}
+
 div.sourceCode {
-  margin: 64px 0;
-  padding: 48px;
+  /*margin: 64px 0;*/
+  /* margin: 16px 0; */
+  padding: 16px;
+  font-size: large;
+  font-family: "FiraCode", "Open Sans", sans-serif !important;
+  /*padding: 48px;*/
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
 }
 
 pre {
@@ -835,7 +895,23 @@ pre {
 }
 
 summary, summary > p, details > p, details > ul > li {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+details > .details-body-outer {
+    padding: 16px;
+}
+details > .details-body-outer > .details-body {
+    padding: 16px;
+    border: 2px;
+    border-style: solid;
+    border-radius: 6px;
+    border-color: #DDA0DD;
+    background: #653e70;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
 }
 
 .exercise-summary {

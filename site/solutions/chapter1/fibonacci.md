@@ -34,16 +34,24 @@ example:
 <div class="hints">
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 There are _two_ cases where the example `fibonacci` function isn't recursive:
 
   - The 0th fibonacci number is 0
   - The 1st fibonacci number is 1
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 The recursive case of `fibonacci` needs to make _two_ recursive calls, because
 it needs to add the next _two_ smallest fibonacci values.
+</div>
+</div>
 </details>
 </div>
 
@@ -51,7 +59,8 @@ it needs to add the next _two_ smallest fibonacci values.
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
-
+<div class="details-body-outer">
+<div class="details-body">
 You can implement the `fibonacci` function using either `if` expressions or
 guards. We'll use guards in this solution.
 
@@ -103,5 +112,7 @@ fibonacci 3 = fibonacci (3 - 1) + fibonacci (3 - 2)
 Remember, when you're working with recursive functions, try to walk through the
 recursion manually if you're having trouble understanding how the function works.
 
+</div>
+</div>
 </details>
 </div>

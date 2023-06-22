@@ -69,6 +69,8 @@ that your versions behave the same way.
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 Remember that functions can be passed around as ordinary arguments. For example,
 imagine that we have a function called `addNumbers` that adds two numbers:
 
@@ -94,11 +96,15 @@ addThreeAndFive = callWithTwoArguments addNumbers 3 5
 As you're working on this exercise, remember that you can pass the functions
 that you want to curry, or uncurry, just like you'd pass around any other
 argument.
+</div>
+</div>
 </details>
 
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 Remember that you can get the first element of a tuple using the `fst` function,
 and you can get the second element of a tuple using the `snd` function:
 
@@ -109,10 +115,14 @@ and you can get the second element of a tuple using the `snd` function:
 λ snd ("hello", "haskell")
 "haskell"
 ```
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
 The built-in `curry` turns a function that takes a tuple into a function that
 takes two arguments. Let's look at an example. Imagine that we have a function
@@ -160,6 +170,8 @@ other direction. For example:
 ```
 
 You can use these examples as you are testing your own implementation.
+</div>
+</div>
 </details>
 </div>
 
@@ -168,7 +180,8 @@ You can use these examples as you are testing your own implementation.
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
-
+<div class="details-body-outer">
+<div class="details-body">
 Let's start by defining our own version of `curry` called `exampleCurry`. Our
 function will need to take three arguments:
 
@@ -217,5 +230,7 @@ taking in the two arguments that we should call the curried function with:
 λ addTwo 2 3
 5
 ```
+</div>
+</div>
 </details>
 </div>

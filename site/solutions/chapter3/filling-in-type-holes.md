@@ -67,6 +67,9 @@ use.
 <details>
 <summary>Click to reveal</summary>
 
+<div class="details-body-outer">
+<div class="details-body">
+
 The goal of this exercise is to understand how to use `undefined` and type holes
 to work with code without necessarily needing to understand the implementation
 of particular functions. In this exercise, focus on using the functions that
@@ -74,18 +77,28 @@ have already been defined for you by looking at their types. You should be able
 to complete this exercise without working through the exact algorithm that's
 being used to transform the input into an output string.
 
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 If you replace `undefined` with a type hole, the compiler will tell you what
 type you should pass to `mapApply`.
 
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Replacing `undefined` with a type hole shows you that the argument to `mapApply`
 should have the type `[Int -> Char]`. Although none of the `where` bindings have
@@ -94,10 +107,15 @@ precisely that type, notice that:
   - `offsets` is a list of functions, although they return `Int`
   - `lookupLetter` is the only function that returns a `Char`
 
+</div>
+</div>
 </details>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 If you're still having trouble, try writing down some of what you know and
 adding narrower type holes. In this case, let's see if we can make any progress
@@ -130,6 +148,8 @@ FillingInTypeHoles.hs:8:26: error: …
 Compilation failed.
 ```
 
+</div>
+</div>
 </details>
 </div>
 
@@ -138,6 +158,9 @@ Compilation failed.
 <div class="solution">
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 Although the solution to this exercise is fairly straightforward, but the
 process of finding the solution can help us learn how to work with types more
@@ -397,5 +420,7 @@ example = mapApply $ map (lookupLetter .) offsets
         n' -> n'
 ```
 
+</div>
+</div>
 </details>
 </div>

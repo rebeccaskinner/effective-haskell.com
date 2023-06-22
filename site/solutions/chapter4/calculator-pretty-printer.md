@@ -36,16 +36,26 @@ shows the calculation as someone might write it themselves.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 If you are getting stuck on grouping with parentheses, try starting with a
 version that doesn't use parentheses at all. Next, refactor your code so that it
 adds parentheses around every expression.
+</div>
+</div>
 </details>
 </div>
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 Try adding a helper function that will prety print an expression and add
 parentheses around it afterwards, if the expression isn't a `Lit` value.
+</div>
+</div>
 </details>
 
 ### Solution
@@ -54,6 +64,9 @@ parentheses around it afterwards, if the expression isn't a `Lit` value.
 
 <details>
 <summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
 
 This exercise is tricky because it requires that we think carefully about how we
 carry information along when we traverse a data structure. We're forced to think
@@ -248,5 +261,7 @@ Success! Like our earlier version, this function avoids adding an extra set of
 parentheses to the outside of our expresion. This time, it does it without the
 need to define the pretty printing function twice.
 
+</div>
+</div>
 </details>
 </div>
