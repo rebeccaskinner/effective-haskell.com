@@ -2,7 +2,7 @@
   <ul>
     $for(chapters)$
     <div class="chapter-toc-entry">
-      <div class="chapter-toc-header">
+      <div class="chapter-toc-header toc-head">
         <h1>
           <a href="$url$">Chapter $chapter$: $title$</a>
           $if(sample)$
@@ -15,14 +15,11 @@
       <div class="chapter-toc-exercise-link">
         <a href="$url$#solutions">Solutions to Exercises</a>
       </div>
-      $if(chapter-has-bonus-content)$
-      there is bonus content here
+      $if(chapter-has-bonus-content)$ there is bonus content here
       <div class="chapter-toc-bonus-content-link">
         <a href="$url$#bonuses">Bonus Content for this Chapter</a>
       </div>
-      $else$
-      no bonus content here
-      $endif$
+      $else$ no bonus content here $endif$
       <div class="chapter-toc-body">
         <p>$summary$</p>
       </div>

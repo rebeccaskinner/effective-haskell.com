@@ -21,6 +21,6 @@ let
       inherit returnShellEnv;
     };
 in builder.overrideAttrs (old: {
-  LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+  # LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   LC_ALL = "C.UTF-8";
 })

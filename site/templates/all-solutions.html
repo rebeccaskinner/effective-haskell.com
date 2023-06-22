@@ -1,8 +1,10 @@
-$for(solutions)$
-  <h3><a href="$url$">$chapter$.$exercise-id$: $name$</a></h3>
+<div class="solution-container">
+  $for(solutions)$
+  <h3 class="solution-heading">
+    <a href="$url$">$chapter$.$exercise-id$: $name$</a>
+  </h3>
   <div class="exercise-summary">
-    <p>
-      $summary$
-    </p>
+    <p>$summary$</p>
   </div>
-$endfor$
+  $endfor$
+</div>
