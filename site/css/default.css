@@ -454,7 +454,7 @@ li > a:visited {
 
 .mobile-order-now-section-background, .desktop-order-now-section-background {
   position: relative;
-  /*background-image: url('../images/rshaskell_silo\ 1.jpg');*/
+  /*background-image: url('../images/rshaskell_silo\ 1.png');*/
   background-position: 50% top;
   background-repeat: no-repeat;
   height: fit-content;
@@ -755,7 +755,7 @@ footer {
     /*margin-top: -60px;*/
     margin-top: 10px;
     width: 100%;
-    background-image: url('../images/rshaskell-silo-desktop-base.jpg');
+    background-image: url('../images/rshaskell-silo-desktop-base.png');
     background-position: left bottom;
     background-repeat: no-repeat;
     background-size: fill;
