@@ -18,7 +18,7 @@
   font-family: "InterThin";
   /*src: url('./fonts/Inter-Thin.woff2') format('woff2'), url('./fonts/Inter-Thin.ttf') format('truetype');*/
   src: url('/fonts/Inter-Thin.woff2') format('woff2'), url('/fonts/Inter-Thin.ttf') format('truetype');
-  font-weight: 100;
+  font-weight: 400;
 }
 
 @font-face {
@@ -80,6 +80,10 @@ h6 {
 p {
   font-size: 16px;
   line-height: 24px;
+}
+
+a {
+  color: #ffffff;
 }
 
 .main {
@@ -454,7 +458,7 @@ li > a:visited {
 
 .mobile-order-now-section-background, .desktop-order-now-section-background {
   position: relative;
-  /*background-image: url('../images/rshaskell_silo\ 1.png');*/
+  background-image: url('../images/rshaskell-silo-mobile-base.png');
   background-position: 50% top;
   background-repeat: no-repeat;
   height: fit-content;
@@ -772,12 +776,11 @@ footer {
 
   .desktop-order-now-section-content {
     width: 100%;
-    margin: 175px 120px;
+    margin: 0 120px;
     background-color: transparent;
   }
 
   .desktop-book-image {
-    margin: 200px auto;
     right: 150px;
     position: relative;
     z-index: 1;
@@ -878,6 +881,7 @@ div.sourceCode {
   font-size: large;
   font-family: "FiraCode", "Open Sans", sans-serif !important;
   /*padding: 48px;*/
+  width: 100%;
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -890,6 +894,10 @@ pre {
   padding: 48px;
   color: #b0b0b0;
   background-color: #1a1a1aa1;
+}
+
+pre.sourceCode {
+  width: fit-content;
 }
 
 .chapter-page-solution-body {
