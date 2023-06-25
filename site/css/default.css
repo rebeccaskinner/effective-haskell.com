@@ -889,6 +889,8 @@ div.sourceCode {
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
+  /* width fix */
+  width: auto;
 }
 
 pre {
