@@ -899,7 +899,8 @@ pre {
 }
 
 pre.sourceCode {
-  width: fit-content;
+    /*width: fit-content;*/
+  width: auto;
 }
 
 .chapter-page-solution-body {
