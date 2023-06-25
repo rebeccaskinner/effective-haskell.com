@@ -21,13 +21,38 @@ With this change in place, create a default implementation of `isNull`.
 
 <details>
 <summary>Click to reveal</summary>
-
 <div class="details-body-outer">
 <div class="details-body">
+
+Remember that your default implementation can refer to other functions defined
+by the typeclass.
 
 </div>
 </div>
 </details>
+
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+With the `Eq` constraint, you can compare values of type `a` using `(==)`.
+
+</div>
+</div>
+</details>
+
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+A value is null if it's equal to `null`.
+
+</div>
+</div>
+</details>
+
 </div>
 
 ### Solution

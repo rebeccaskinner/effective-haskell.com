@@ -36,13 +36,45 @@ Create instances of this typeclass for:
 
 <details>
 <summary>Click to reveal</summary>
-
 <div class="details-body-outer">
 <div class="details-body">
+
+There's more than one way to create an instance for `Maybe a`. You can pick
+whichever definition you like.
 
 </div>
 </div>
 </details>
+
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+Remember: for a type like `Maybe a` if you want to use `null` or `isNull` for
+the type `a` you'll need to ensure that `a` has a `Nullable` instance.
+
+</div>
+</div>
+</details>
+
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+In the instance that you define for `Maybe a` you can ensure `a` has a
+`Nullable` instance like this:
+
+```haskell
+instance Nullable a => Nullable (Maybe a) where
+  -- the body of the instance goes here
+```
+
+</div>
+</div>
+</details>
+
 </div>
 
 ### Solution
