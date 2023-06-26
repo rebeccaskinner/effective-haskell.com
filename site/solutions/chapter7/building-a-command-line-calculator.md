@@ -15,18 +15,33 @@ the sum of the provided values.
 Next, Modify the program so that the first argument is an operation (`+`, `-`,
 or `*`) and performs the supplied operation on the list of numbers.
 
-### Hint 1 {.hint}
+### Hints
+<div class="hints">
 
-Some high level hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-### Hint 2 {.hint}
+</div>
+</div>
+</details>
 
-Some more detailed hint text
-
-### Hint 3 {.hint}
-
-Even more detailed hint text
+</div>
 
 ### Solution {.solution}
 
-A complete solution for the exercise
+<div class="solution">
+
+<details>
+<summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
+
+
+</div>
+</div>
+</details>
+
+</div>

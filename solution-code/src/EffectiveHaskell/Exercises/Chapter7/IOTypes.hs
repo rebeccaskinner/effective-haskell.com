@@ -1,4 +1,4 @@
-module EffectiveHaskell.Exercises.Chapter6.DerivingNullable where
+module EffectiveHaskell.Exercises.Chapter7.IOTypes where
 
 doubleIO :: IO (IO String)
 doubleIO = return $ return "hello"
