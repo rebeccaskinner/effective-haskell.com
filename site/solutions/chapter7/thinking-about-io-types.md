@@ -335,7 +335,7 @@ with the type `[IO a] -> IO [a]`.  When might you use a function like that?
 <summary>Click to reveal</summary>
 <div class="details-body-outer">
 <div class="details-body">
-
+Remember, you can make recursive calls inside of IO actions.
 </div>
 </div>
 </details>
@@ -344,7 +344,8 @@ with the type `[IO a] -> IO [a]`.  When might you use a function like that?
 <summary>Click to reveal</summary>
 <div class="details-body-outer">
 <div class="details-body">
-
+You'll need to evaluate all of the `IO` actions before you can return a list
+with the results.
 </div>
 </div>
 </details>
@@ -358,6 +359,7 @@ with the type `[IO a] -> IO [a]`.  When might you use a function like that?
 <summary>Click to reveal</summary>
 <div class="details-body-outer">
 <div class="details-body">
+
 
 </div>
 </div>
