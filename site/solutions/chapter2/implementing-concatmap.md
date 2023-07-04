@@ -3,7 +3,8 @@ chapter: 2
 exercise-id: 3
 name: Implementing concatMap
 summary: "
-The third exercise in chapter 2
+This exercise will help you build on your understanding of common high order
+functions by building your own implementation of the concatMap function.
 "
 ---
 

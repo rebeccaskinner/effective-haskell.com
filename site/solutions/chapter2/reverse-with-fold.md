@@ -3,7 +3,10 @@ chapter: 2
 exercise-id: 1
 name: Reversing A List With Folds
 summary: "
-The first exercise in chapter 2
+When you're writing Haskell, it's important to get an intuitive feel for how
+different high order functions work with the structure of data types like
+lists. In this exercise you'll develop that intuition by working through an
+exercise to reverse a list using different fold operations.
 "
 ---
 

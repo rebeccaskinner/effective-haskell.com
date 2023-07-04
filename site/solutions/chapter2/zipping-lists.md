@@ -3,7 +3,10 @@ chapter: 2
 exercise-id: 2
 name: Zipping Lists
 summary: "
-The second exercise in chapter 2
+This exercise will give you a chance to practice using list
+comprehensions. You'll build your own version of the zipWith function, with and
+without comprehensions. As you work through the exercise, you'll learn how to
+think through different approaches to working with list structures.
 "
 ---
 

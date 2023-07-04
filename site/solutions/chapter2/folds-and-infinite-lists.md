@@ -3,7 +3,9 @@ chapter: 2
 exercise-id: 5
 name: Folds and Infinite Lists
 summary: "
-The final exercise in chapter 2
+In this exercise you'll reinforce your understanding of folds and laziness by
+manually stepping through the recursive structure of various fold functions
+using both finite and infinite lists.
 "
 ---
 

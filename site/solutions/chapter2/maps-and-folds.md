@@ -3,13 +3,14 @@ chapter: 2
 exercise-id: 4
 name: Maps and Folds
 summary: "
-The fourth exercise in chapter 2
+In this exercise you'll work on building a better intution for when to use
+different higher order functions, like map, foldl, and foldr.
 "
 ---
 
 ### Maps and Folds
 
-Think about the following two lines of code that use `finalmap` and `foldr`.
+Think about the following two lines of code that use `map` and `foldr`.
 When might they do the same thing?  When might they differ?  How might that
 change if you used `foldl` instead of `foldr`?
 
