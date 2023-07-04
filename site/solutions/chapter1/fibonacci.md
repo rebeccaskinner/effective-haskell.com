@@ -3,7 +3,9 @@ chapter: 1
 exercise-id: 2
 name: The Fibonacci Sequence
 summary: "
-The second exercise in chapter 1
+In this exercise you'll once again practice writing and calling recursive
+Haskell functions. This time, you'll implement a function to calculate a
+fibonacci number using multiple recursive calls.
 "
 ---
 

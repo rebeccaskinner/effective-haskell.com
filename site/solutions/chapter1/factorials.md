@@ -3,7 +3,8 @@ chapter: 1
 exercise-id: 1
 name: Factorials
 summary: "
-The first exercise in chapter 1
+In this exercise you'll practice the basics of writing and calling Haskell
+functions by creating a recursive implementation of the factorial function.
 "
 ---
 

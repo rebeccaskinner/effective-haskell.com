@@ -3,7 +3,9 @@ chapter: 1
 exercise-id: 3
 name: Manual Currying
 summary: "
-The third exercise in chapter 1
+This is the third exercise in chapter 1. In this exercise you'll get practice
+with function currying and partial application by implementing your own versions
+of the curry and uncurry functions.
 "
 ---
 
