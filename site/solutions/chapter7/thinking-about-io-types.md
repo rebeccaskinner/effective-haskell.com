@@ -349,7 +349,6 @@ with the results.
 </div>
 </div>
 </details>
-
 </div>
 
 
@@ -359,7 +358,198 @@ with the results.
 <summary>Click to reveal</summary>
 <div class="details-body-outer">
 <div class="details-body">
+It turns out that functions with types like `[IO a] -> IO [a]` are useful and
+come up regularly in all sorts of Haskell programs. There are some general
+purpose functions that you'll learn about later in the book that will teach you
+how to work with functions that are a bit more general than what we'll cover in
+this exercise. For now, let's focus on the question at hand. We can write a
+function called `sequenceIO` that takes a list of IO actions and returns a
+single IO action that returns a list with all of the values.
 
+Let's start with the easiest scenario: If the input is an empty list, we can
+just `return` an empty list. The non-empty list case is a bit more complicated,
+so we'll leave it `undefined` for now:
+
+```haskell
+sequenceIO :: [IO a] -> IO [a]
+sequenceIO [] = return []
+sequenceIO (x:xs) = undefined
+```
+
+In the non-empty case we've pattern matched the first IO action out from our
+list. Let's ignore the rest of the list for now, and think about how we can
+return a list with just this element, with the right type. We'll need to
+evaluate the IO action, so we'll probably want to use `>>=`:
+
+```haskell
+sequenceIO :: [IO a] -> IO [a]
+sequenceIO [] = return []
+sequenceIO (x:xs) = x >>= \x' -> undefined
+```
+
+In this example, `x'` will contain the result of evaluating the IO action in
+`x`. If we don't care about the rest of the list, we can simply create a new
+list that holds this value and `return` it:
+
+```haskell
+sequenceIO :: [IO a] -> IO [a]
+sequenceIO [] = return []
+sequenceIO (x:xs) = x >>= \x' -> return [x]
+```
+
+Of course, this will only give us back the first IO action in our list. If we
+want everything, we'll need to sequence the rest of the list as well. How should
+we do that? We know that `xs` has the type `[IO a]`. If we recursively pass `xs`
+to `sequenceIO` we can convert that to a type of `IO [a]`. Let's add that as a
+where binding for now, and then think about what to do next:
+
+```haskell
+sequenceIO :: [IO a] -> IO [a]
+sequenceIO [] = return []
+sequenceIO (x:xs) = x >>= \x' -> return [x']
+  where rest = sequenceIO xs
+```
+
+Next, let's combine the result of our recursive call with `x'`. To do that,
+we'll need to get at the value inside of `rest`. We can use `(>>=)` to help us
+again. Since it will type check whether we do our recursive call first or last,
+let's start with `rest`:
+
+```haskell
+sequenceIO :: [IO a] -> IO [a]
+sequenceIO [] = return []
+sequenceIO (x:xs) = rest >>= \rest' -> x >>= \x' -> return $ x' : rest'
+  where rest = sequenceIO xs
+```
+
+```haskell
+λ> sequenceIO $ map print [1..10]
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+[(),(),(),(),(),(),(),(),(),()]
+```
+
+That doesn't look quite right! We would have expected our numbers to be printed
+out in ascending order, but in this test we're seeing them printed in reverse
+order. It turns out that our choice to put `rest` first has a big impact. When
+we pass `rest` into `(>>=)` we have to strictly evaluate the IO action. That
+means we're going to
+
+In this example we're creating a new IO action that first runs the IO action at
+the head of our list, then recursively runs the IO actions in the remainder of
+the list. Finally, it returns the result of our initial IO action cons-ed onto
+the result of the IO action that computes the remainder of the list. It type
+checks, but let's load up `ghci` to see if it actually works.
+
+```haskell
+λ sequenceIO $ map print [1..10]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+[(),(),(),(),(),(),(),(),(),()]
+```
+
+At first glance, this might be a little confusing. Let's try it again with some
+intermediate values to help understand what's happening:
+
+```haskell
+λ printUpToTen = map print [1..10]
+λ :t printUpToTen
+printUpToTen :: [IO ()]
+λ :t sequenceIO printUpToTen
+sequenceIO printUpToTen :: IO [()]
+λ sequenceIO printUpToTen
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+[(),(),(),(),(),(),(),(),(),()]
+```
+
+That's better! Since all of our calls to `print` are going to return `IO ()`,
+after calling `sequenceIO` we're going to be let with a list of plain `()`
+values. When we call `sequenceIO` we're first seeing the side effects of each
+number being printed, and the final line is the value returned by the function,
+which is a list of `()` values. Getting back a list of results is a little
+annoying for examples like this one, where we're using IO actions entirely for
+their side effects. Let's write a helper function that discards the return
+value. We'll follow a common Haskell convention and add an underscore suffix at
+the end of our function name to indicate that it ignores its result:
+
+```haskell
+sequenceIO_ :: [IO a] -> IO ()
+sequenceIO_ actions = sequenceIO actions >> return ()
+```
+
+If we test this, you'll see that `ghci` helpfully ignores the final `()` values
+and works like we'd expect any sort of `print`-like function to work:
+
+```haskell
+λ sequenceIO_ $ map print [1..10]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+```
+
+So far, so good, but there are a few things worth spending some time on before
+we finish up this exercise. First, there's a subtlety in our implementation that
+we should take some time to investigate fruther. Second, there's an opportunity
+to rewrite our code to be much easier to read using `do` notation.
+
+Remember that whenever we have code like this:
+
+```haskell
+a >>= \b -> doSomethingWith b
+```
+
+We can rewrite it with `do` notation like this:
+
+```haskell
+do
+  b <- a
+  doSomethingWith b
+```
+
+This isn't always more readable, but it can be really helpful in situations like
+our implementation of `sequenceIO` where we need to run two IO actions and get
+their results before we can move on. Let's give it a try:
+
+```haskell
+sequenceIO :: [IO a] -> IO [a]
+sequenceIO [] = return []
+sequenceIO (x:xs) = do
+  x' <- x
+  xs' <- sequenceIO xs
+  return $ x' : xs'
+```
 
 </div>
 </div>
