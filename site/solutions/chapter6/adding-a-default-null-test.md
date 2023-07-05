@@ -3,7 +3,10 @@ chapter: 6
 exercise-id: 2
 name: Adding a Default Null Test
 summary: "
-The second exercise in Chapter 6
+Get more comfortable with constraints on type classes and type class instances
+by expanding on the work from the previous exercise in the chapter. You'll
+modify an existing type class with a new constraint, and then look at how the
+new constraint changes the default instances you can write.
 "
 ---
 

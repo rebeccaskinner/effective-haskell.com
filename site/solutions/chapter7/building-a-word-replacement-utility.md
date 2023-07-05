@@ -3,7 +3,8 @@ chapter: 7
 exercise-id: 3
 name: Building A Word Replacement Utility
 summary: "
-Summary TBD
+Substitute words in a document, get practice with file IO, and see a common
+approach to handling command line arguments by working through this exercise.
 "
 ---
 

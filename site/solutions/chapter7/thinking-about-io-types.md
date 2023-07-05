@@ -3,7 +3,11 @@ chapter: 7
 exercise-id: 1
 name: Thinking about IO Types
 summary: "
-Summary TBD
+This collection of small questions will ask you to reflect on how IO actions
+work, and how you can manipulate and combine them in various ways. After going
+through this exercise you'll be in a better position to work through the
+practical exercise in chapter 8, and you'll have a head start on understanding
+some of the nuances of working with Monads that you'll encounter in chapter 9.
 "
 ---
 

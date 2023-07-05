@@ -3,7 +3,11 @@ chapter: 7
 exercise-id: 2
 name: Building a Command Line Calculator
 summary: "
-Summary TBD
+Build a command line tool that will let you do basic arithmetic on a list of
+numbers. As you work through this exercise you'll get more experience working
+with command line arguments, learn how to deal with common errors in command
+line programs, and get to try comparing bind and do notation when working with
+IO actions.
 "
 ---
 

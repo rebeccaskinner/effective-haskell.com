@@ -3,7 +3,9 @@ chapter: 6
 exercise-id: 3
 name: Deriving Nullable
 summary: "
-Summary TBD
+Exercise your understanding of Deriving Via by building type class instances
+that can be used specifically for deriving instances. Expand on your prior
+exercise solutions to make it easy to add Nullable instances to new types.
 "
 ---
 

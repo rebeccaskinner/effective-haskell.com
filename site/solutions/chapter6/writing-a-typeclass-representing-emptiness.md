@@ -3,7 +3,9 @@ chapter: 6
 exercise-id: 1
 name: Writing Typeclass Representing Emptiness
 summary: "
-The first exercise in chapter 6
+Practice writing type classes by creating your own class for optional
+types. This exercise will give you a chance to cement your understanding of type
+classes by defining a new type class and creating several instances for it.
 "
 ---
 
