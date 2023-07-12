@@ -14,18 +14,51 @@ viewing a file. The program should clear the screen and display a help
 message. Once the user scrolls past the end of the help text, or presses `q` the
 program should return them to where they were in the document.
 
-### Hint 1 {.hint}
+### Hints
+<div class="hints">
 
-Some high level hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-### Hint 2 {.hint}
+</div>
+</div>
+</details>
 
-Some more detailed hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-### Hint 3 {.hint}
+</div>
+</div>
+</details>
 
-Even more detailed hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
+</details>
+
+</div>
 
 ### Solution {.solution}
 
-A complete solution for the exercise
+<div class="solution">
+
+<details>
+<summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
+
+
+</div>
+</div>
+</details>
+
+</div>

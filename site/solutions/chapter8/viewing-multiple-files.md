@@ -13,18 +13,51 @@ Expand your application to allow the user to pass more than one file in on the
 command line, and view them in order. Make sure to update the status line when
 you go from showing one file to another.
 
-### Hint 1 {.hint}
 
-Some high level hint text
+### Hints
+<div class="hints">
 
-### Hint 2 {.hint}
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-Some more detailed hint text
+</div>
+</div>
+</details>
 
-### Hint 3 {.hint}
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-Even more detailed hint text
+</div>
+</div>
+</details>
+
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
+</details>
+
+</div>
 
 ### Solution {.solution}
 
-A complete solution for the exercise
+<div class="solution">
+
+<details>
+<summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
+</details>
+
+</div>

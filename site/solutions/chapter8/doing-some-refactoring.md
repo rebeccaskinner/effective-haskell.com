@@ -13,18 +13,51 @@ Throughout most of this chapter we used bind syntax to implement our IO actions.
 Look through some of the code you've written for opportunities to refactor this
 application to use do-notation where appropriate.
 
-### Hint 1 {.hint}
+### Hints
+<div class="hints">
 
-Some high level hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-### Hint 2 {.hint}
+</div>
+</div>
+</details>
 
-Some more detailed hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-### Hint 3 {.hint}
+</div>
+</div>
+</details>
 
-Even more detailed hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
+</details>
+
+</div>
 
 ### Solution {.solution}
 
-A complete solution for the exercise
+<div class="solution">
+
+<details>
+<summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
+
+
+</div>
+</div>
+</details>
+
+</div>
