@@ -13,18 +13,52 @@ Many of the earlier exercises in this book used `String` instead of `ByteString`
 or `Text`. Refactor some of your existing code to use these more efficient types
 instead.
 
-### Hint 1 {.hint}
 
-Some high level hint text
+### Hints
+<div class="hints">
 
-### Hint 2 {.hint}
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-Some more detailed hint text
+</div>
+</div>
+</details>
 
-### Hint 3 {.hint}
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-Even more detailed hint text
+</div>
+</div>
+</details>
+
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
+</details>
+
+</div>
 
 ### Solution {.solution}
 
-A complete solution for the exercise
+<div class="solution">
+
+<details>
+<summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
+
+
+</div>
+</div>
+</details>
+
+</div>

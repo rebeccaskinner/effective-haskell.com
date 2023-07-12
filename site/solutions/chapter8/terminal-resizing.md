@@ -22,18 +22,51 @@ unreasonably difficult with the knowledge that you have learned so far in this
 book, so you should handle terminal resizing by allowing the user to press a key
 to reflow the text.
 
-### Hint 1 {.hint}
+### Hints
+<div class="hints">
 
-Some high level hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-### Hint 2 {.hint}
+</div>
+</div>
+</details>
 
-Some more detailed hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
 
-### Hint 3 {.hint}
+</div>
+</div>
+</details>
 
-Even more detailed hint text
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+</div>
+</div>
+</details>
+
+</div>
 
 ### Solution {.solution}
 
-A complete solution for the exercise
+<div class="solution">
+
+<details>
+<summary>Click to reveal</summary>
+
+<div class="details-body-outer">
+<div class="details-body">
+
+
+</div>
+</div>
+</details>
+
+</div>
