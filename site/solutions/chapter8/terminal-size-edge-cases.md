@@ -3,7 +3,10 @@ chapter: 8
 exercise-id: 1
 name: Handling Terminal Size Edge Cases
 summary: "
-Summary TBD
+Errors happen when you are dealing with IO, and it's important to handle them
+gracefully. In this exercise you'll have the opportunity to look at a couple of
+common ways to deal with exceptions in a real application, and evaluate
+the tradeoffs of each approach.
 "
 ---
 
@@ -124,6 +127,68 @@ getTerminalSizeWithDefault =
               in return $ ScreenDimensions lines' cols'
 ```
 
+You'll notice in this that our code has gotten a bit shorter, but still looks
+largely similar to the earlier version. We've kept the original definition of
+`tputScreenDimensions`, but now we're calling it through `catch` and returning
+a default `ScreenDimensions` if there are any exceptions. Since we'll be
+handling errors with `catch` we no longer need to check the operating system as
+a way of guessing whether or not `tput` is likely to be installed.
+
+The next approach we identified was to avoid catching any exceptions in
+`getTerminalSize` and, instead, to catch an exception at the call site and deal
+with it there. Right now we're calling `getTerminalSize` from `runHCat`:
+
+```haskell
+runHCat :: IO ()
+runHCat =
+  handleArgs
+  >>= eitherToErr
+  >>= flip openFile ReadMode
+  >>= TextIO.hGetContents
+  >>= \contents ->
+    getTerminalSize >>= \termSize ->
+      let pages = paginate termSize contents
+      in showPages pages
+```
+
+Let's take a look at how we could handle an error in this function
+instead. We'll still default to a 25x80 terminal if we can't get a default
+terminal size, but this time we'll show the user a message telling them what
+failed and letting them know that we're falling back to a default terminal size.
+
+We'll do this by adding a new `where` binding named `terminalSizeWithErr`:
+
+```haskell
+terminalSizeWithErr = catch @IOError getTerminalSize $ \err ->
+  Clock.getCurrentTime >>= \now ->
+    let defaultTermSize = ScreenDimensions 25 80
+        finfo = FileInfo "" 0 now False False False
+        errText = Text.pack $
+          "An error occurred while trying to get the screen dimensions:\n"
+          <> show err
+          <> "\nDefaulting to a terminal size of 80x25"
+        msg = paginate defaultTermSize finfo errText
+    in showPages msg >> pure defaultTermSize
+```
+
+As you can see, our new error handling function is quite a bit bigger than the
+error handling we added when we defined `getTerminaSizeWithDefault`, but we're
+also getting a much more featureful error handling implementation. We can
+temporarily change the call to `tput` to something that doesn't exist so that we
+can see our error handling working. You should see a message like this:
+
+```
+An error occurred while trying to get the screen dimensions:
+tput-bad: readCreateProcess: posix_spawnp: does not exist (No such file or
+directory)
+Defaulting to a terminal size of 80x25
+```
+
+Notice that in this example output the text is wrapped to 80 characters. You can
+also see in this screenshot that the text is wrapped to 80 characters even
+though the terminal is larger:
+
+![A screenshot of hcat error output wrapped to 80 columns](/images/solutions/chapter8/tput-error.webp)
 
 
 </div>
