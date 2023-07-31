@@ -60,13 +60,17 @@ have occurred.  Try address these edge cases:
 <div class="details-body-outer">
 <div class="details-body">
 
-For this exercise, let's start by narrowing our focus down to just the parts of
-our program that are relevant. Specifically, the `getTerminalSize` and the
-`ScreenDimensions` record. This will let us focus on the solution at hand
-without too much extraneous code. As you work through the exercises for this
-chapter, try to integration the solutions into your program. For now, let's look
-at the version of `getTerminalSize` and `ScreenDimensions` that you should have
-after finishing the chapter:
+This exercise asks us to consider three different potential errors. For the
+moment we'll focus on the first problem: what should we do if `tput` is
+missing. The next solution on this page will cover the remaining errors.
+
+For now, let's narrow our focus down to just the parts of our our program that
+are relevant. Specifically, the `getTerminalSize` and the `ScreenDimensions`
+record. This will let us focus on the solution at hand without too much
+extraneous code. As you work through the exercises for this chapter, try to
+integration the solutions into your program. For now, let's look at the version
+of `getTerminalSize` and `ScreenDimensions` that you should have after finishing
+the chapter:
 
 ```haskell
 data ScreenDimensions = ScreenDimensions
@@ -92,9 +96,9 @@ getTerminalSize =
               in return $ ScreenDimensions lines' cols'
 ```
 
-All of the scenarios listed in the example should throw an `IO` exception if
-they fail, so focus there. Let's look at the three most compelling options for
-how we might want to add error handing when an exception is thrown:
+If `tput` is missing, it should throw an `IO` exception, so lets focus on
+that. There are a couple of different ways we can go about dealing with an
+exception caused by a missing executable:
 
   1. Catch the exception and return a default `ScreenDimensions` value.
   2. Don't catch the exception, and let the caller deal with it.
@@ -140,15 +144,18 @@ with it there. Right now we're calling `getTerminalSize` from `runHCat`:
 
 ```haskell
 runHCat :: IO ()
-runHCat =
-  handleArgs
-  >>= eitherToErr
-  >>= flip openFile ReadMode
-  >>= TextIO.hGetContents
-  >>= \contents ->
-    getTerminalSize >>= \termSize ->
-      let pages = paginate termSize contents
-      in showPages pages
+runHCat = do
+  targetFilePath <- do
+    args <- handleArgs
+    eitherToErr args
+  contents <- do
+    handle <- openFile targetFilePath ReadMode
+    TextIO.hGetContents handle
+  termSize <- getTerminalSize
+  hSetBuffering stdout NoBuffering
+  finfo <- fileInfo targetFilePath
+  let pages = paginate termSize finfo contents
+  showPages pages
 ```
 
 Let's take a look at how we could handle an error in this function
@@ -189,6 +196,181 @@ also see in this screenshot that the text is wrapped to 80 characters even
 though the terminal is larger:
 
 ![A screenshot of hcat error output wrapped to 80 columns](/images/solutions/chapter8/tput-error.webp)
+
+Finally, let's look at how we might use `Either` for error handling. We can
+start by making a minor change to `terminalSizeWithErr` to return a `Left` value
+instead of a default `ScreenDimensions` when we catch an exception:
+
+```haskell
+getTerminalSizeEither =
+  catch @IOException (Right <$> tputScreenDimensions) $ \e -> pure $ Left (show e)
+  where
+    tputScreenDimensions :: IO ScreenDimensions
+    tputScreenDimensions =
+      readProcess "tput" ["lines"] ""
+      >>= \lines ->
+        readProcess "tput" ["cols"] ""
+        >>= \cols ->
+              let lines' = read $ init lines
+                  cols'  = read $ init cols
+              in return $ ScreenDimensions lines' cols'
+```
+
+Since we're returning an explicit error, this function isn't a drop-in
+replacement for `getTerminalSize` or `terminalSizeWithErr`. We'll need to handle
+the error and then either exit or return a default value. We'll need to add a
+few functions to do this, so let's go ahead and take a look at all of them
+together:
+
+
+```haskell
+  where
+    defaultScreenDimensions = ScreenDimensions 25 80
+    showError finfo termSize err =
+      showPages $ paginate termSize finfo err
+    termSizeWithDefault finfo defaultTermSize = do
+      termSize <- getTerminalSizeEither
+      case termSize of
+        Left err -> do
+          showError finfo defaultTermSize (Text.pack err)
+          pure defaultTermSize
+        Right termSize' -> pure termSize'
+     getTerminalSizeEither =
+      catch @IOException (Right <$> tputScreenDimensions) $ \e -> pure $ Left (show e)
+    tputScreenDimensions =
+      readProcess "tput" ["lines"] ""
+      >>= \lines ->
+        readProcess "tput" ["cols"] ""
+        >>= \cols ->
+              let lines' = read $ init lines
+                  cols'  = read $ init cols
+              in return $ ScreenDimensions lines' cols'
+```
+
+In this example we've left `getTerminalSizeEither` and `tputScreenDimensions`
+unchanged, but we've added three new `where` bindings. Like our other examples,
+we need to create a default terminal size to use if we've encountered an
+error. In this example, it's called `defaultScreenDimensions`. We've also added
+a new function, `showError` that will print an error message to the
+screen. Unlike the last example, we're not creating a rich error message
+here. You're welcome to add a more robust error in your example if you
+prefer. The last function we've added is `termSizeWithDefault`. This function
+tries to get a terminal size, checks to see if we've gotten an error, and if so
+prints the error message before returning a default value.
+
+We've now looked at three different approaches to handling a missing `tput`
+executable. All of the approaches we've tried have been pretty similar in how
+they've dealt with errors. Where they differ is in where the errors are handled
+and how they are communicated back to our user. There will be times when each of
+the different approaches we've taken will be useful, so let's lay out the pros
+and cons explicitly.
+
+First, we wrote a function that handled the missing `tput` error entirely
+internally and returned a default value. Handling the error when it happens
+simplifies things for our callers, since they neither need to know about this
+failure case nor explicitly handle it. The biggest drawback to this style of
+error handling is that it's inflexible. In `getTerminalSizeWithDefault` we're
+not giving the caller any choice about what to do when an error occurs. If the
+caller wants to print an error message, try a different method of getting the
+terminal size, or even exit the application they are out of luck. When something
+goes wrong, caller won't even know that an error ocurred. The tradeoffs here
+mean that this style of error handling is best used for private functions that are
+internal to a module and not exported. When the function isn't general purpose
+and we know that it's handling errors the way we want them handled, then it's a
+more worthwhile tradeoff to keep the interface to the function easy to use.
+
+Next we wrote a version of our function that didn't do any error handling, and
+we allowed the caller to deal with the IO exception themselves. This approach
+gives our caller all of the power. They can catch the exception and handle it
+however they want- or they can ignore it entirely. If the caller chooses to
+ignore the error it will bubble upwards until it's either caught by something
+further up the callstack, or our program exits. It's always possible for IO
+actions to raise exceptions, so we might expect that the caller will be
+expecting exceptions and handling them already. In reality though, assuming that
+users will know to deal with IO exceptions works best when the exceptions are
+truly exceptional. We're assuming `tput` will exist, and it's a pretty common
+utility so our example might pass that test, but it's something that we should
+think about. When we don't catch the exception, we're telling our users that
+this failure case should be treated the same as other exceptional situations
+that might happen we we're doing IO.
+
+Finally, we wrote a version of our code that uses `Either` rather than
+exceptions for handling a bad call to `tput`. Of all the options we've looked
+at, this is the best default approach to handling errors. Just like in our last
+example, we're still letting the caller decide how they want to handle
+errors. Since we're explicit about the fact that we might return an error if
+`tput` isn't avaialble, we don't need to worry about the caller not realizing
+failure is a possibility, so our code is much more likely to be used safely.
+
+</div>
+</div>
+</details>
+
+<details>
+<summary>Click to reveal</summary>
+<div class="details-body-outer">
+<div class="details-body">
+
+The last part of this solution spent a lot of time looking at different
+approaches to handling IO exceptions when a call to `tput` fails, but we still
+have to other edge cases to consider:
+
+ - `tput` doesn't return a number
+ - `tput` output doesn't contain a trailing newline
+
+In the last part of this exersise we focused a lot of our time on catching
+IO exceptions- either inside of the function that gets the terminal size, or
+outside of it. Unfortunately neither of these errors will generate an IO
+exception. We can easily write a quick test to validate that:
+
+```haskell
+module EffectiveHaskell.Exercises.Chapter8.ReadError where
+import Control.Exception
+
+readWithCatch :: String -> IO Int
+readWithCatch input =
+  catch @IOException readInput $ \_e -> pure 0
+  where
+    readInput = pure . read $ input
+```
+
+If we call `readWithCatch` and give it something other than a number, we'll
+get a runtime error instead of `0`:
+
+```haskell
+λ readWithCatch "0"
+0
+
+λ readWithCatch "zero"
+*** Exception: Prelude.read: no parse
+```
+
+It turns out that this situation isn't entirely hopeless. The `evaluate`
+function from `Control.Exception` will let us create a new `IO` action from a
+pure value, and in the process any runtime exceptions will get thrown and we can
+`catch` them. Let's try it out:
+
+```haskell
+readWithCatch' :: String -> IO Int
+readWithCatch' input =
+  catch @ErrorCall readInput $ \_e -> pure 0
+  where
+    readInput = evaluate $ read input
+```
+
+You'll notice two changes in this code compared to our earlier version. First,
+instead of `IOException` we're now catching `ErrorCall`. When `read` fails to
+parse our string it calls `error` and `evaluate` throws that error as an
+`ErrorCall` exception.
+
+
+
+type that's generate when `SomeException` is
+an *existential type* that can represent any other kind of exception. You'll
+learn more about existential types in
+[Chapter 11: Serializing Heterogenous Data](/chapters/chapter11.html). For now,
+you don't need to care about the implementation details, just know that it can
+match any kind of exception, including both `IOException`s and
 
 
 </div>
