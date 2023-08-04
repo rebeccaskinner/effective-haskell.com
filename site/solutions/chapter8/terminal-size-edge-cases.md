@@ -422,6 +422,9 @@ expect. For our purposes, we expect that the output should always be newline
 terminated. If there's no newline, we can't be sure the rest of the text is
 reliable, so we'll go with the strict approach.
 
+Let's write a function called `nonEmptyStrStripNewline` that will take a
+non-empty string and
+
 </div>
 </div>
 </details>
