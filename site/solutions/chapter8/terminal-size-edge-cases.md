@@ -358,20 +358,69 @@ readWithCatch' input =
     readInput = evaluate $ read input
 ```
 
-You'll notice two changes in this code compared to our earlier version. First,
-instead of `IOException` we're now catching `ErrorCall`. When `read` fails to
-parse our string it calls `error` and `evaluate` throws that error as an
-`ErrorCall` exception.
+You'll notice in this example we've changed the type of the exception we're
+catching. Not all exceptions are `IOException`s, even though we're dealing with
+an `IO`
+action. [`ErrorCall`](https://hackage.haskell.org/package/base-4.18.0.0/docs/Control-Exception.html#t:ErrorCall)
+is raised when something calls the `error` function.
 
+This version of our code works, and we can test it out in `ghci`:
 
+```haskell
+λ readWithCatch' "zero"
+0
+λ readWithCatch' "1"
+1
+λ readWithCatch' "2"
+2
+λ readWithCatch' "three"
+0
+```
 
-type that's generate when `SomeException` is
-an *existential type* that can represent any other kind of exception. You'll
-learn more about existential types in
-[Chapter 11: Serializing Heterogenous Data](/chapters/chapter11.html). For now,
-you don't need to care about the implementation details, just know that it can
-match any kind of exception, including both `IOException`s and
+Clearly this code works as expected, but is it a good design? Using `evaluate`
+means that we're turning otherwise pure code into an `IO` action so that we can
+handle errors as exceptions. There are situations where this is a reasonable
+design decision- for example writing tests where we want to catch and assert on
+errors, or writing a server where an `error` while handling a particular request
+should not take down the entire server. Still, when possible we should aim to
+keep pure code pure. Thankfully, we have another option. The `Text.Read` module
+in `base` has a function named `readEither` that will return an actual error
+value instead of calling `error`:
 
+```haskell
+λ import Text.Read
+
+λ readEither @Int "1"
+Right 1
+
+λ readEither @Int "2"
+Right 2
+
+λ readEither @Int "three"
+Left "Prelude.read: no parse"
+```
+
+Getting back a pure `Either` value seems like a much nicer approach than
+`evaluate`, so let's stick with it for now. There are two error cases that we
+need to handle:
+
+ - `tput` doesn't return a number
+ - `tput` output doesn't contain a trailing newline
+
+`readEither` solves the first problem, but we still need to address the second
+problem. Our existing code assumes that the output we get will always be
+newline-terminated, so it uses `init` to drop the last character. If the output
+doesn't end with a newline for some reason, then we'll remove a character that
+should have been part of the value we want to parse. Let's write a function to
+handle this case.
+
+There are two ways we might handle this. The "flexible” approach would say that
+we should drop a newline at the end of the string if one is present, and
+otherwise just try to parse the string as-is. The "strict” approach would
+instead return an error if the string doesn't end in a newline as we
+expect. For our purposes, we expect that the output should always be newline
+terminated. If there's no newline, we can't be sure the rest of the text is
+reliable, so we'll go with the strict approach.
 
 </div>
 </div>

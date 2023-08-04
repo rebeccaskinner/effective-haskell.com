@@ -168,13 +168,14 @@ runHCat = do
     tputEither tputType =
       catch @IOException (Right <$> tput tputType) $ \e -> pure $ Left (show e)
 
-    nonEmptyStrWithNewline str
+    nonEmptyStrStripNewline str
       | null str = Left "empty string"
-      | last str == '\0' = Right $ init str
+      | str == "\n" = Left "empty string"
+      | last str == '\n' = Right $ init str
       | otherwise = Left "missing newline"
 
     readTrailingNewline str =
-      nonEmptyStrWithNewline str >>= readEither
+      nonEmptyStrStripNewline str >>= readEither
 
     tputScreenDimensions = do
       termLines <- tputEither "lines"
@@ -183,3 +184,14 @@ runHCat = do
         parsedLines <- readTrailingNewline =<< termLines
         parsedCols <- readTrailingNewline =<< termCols
         pure $ ScreenDimensions parsedLines parsedCols
+
+unsnoc :: [a] -> Maybe ([a], a)
+unsnoc [] = Nothing
+unsnoc (x:xs) =
+  case unsnoc xs of
+    Nothing -> Just ([], x)
+    Just (xs', x') -> Just (x:xs', x')
+
+uncons :: [a] -> Maybe (a, [a])
+uncons [] = Nothing
+uncons (x:xs) = Just (x,xs)
