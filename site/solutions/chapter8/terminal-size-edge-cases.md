@@ -422,8 +422,21 @@ expect. For our purposes, we expect that the output should always be newline
 terminated. If there's no newline, we can't be sure the rest of the text is
 reliable, so we'll go with the strict approach.
 
-Let's write a function called `nonEmptyStrStripNewline` that will take a
-non-empty string and
+We need towrite a function called `nonEmptyStrStripNewline` that will either
+return a non-empty string with the newline terminated from the end, or an
+appropriate error. There are quite a few edge cases we'll need to deal with in
+this function:
+
+  - The string is empty
+  - The string doesn't end with a newline
+  - After removing the newline we're left with an empty string
+
+Naively handling all of these edge cases is entirely possible, but we can get
+some help by implementing our own version of a function named `unsnoc`:
+
+```haskell
+
+```
 
 </div>
 </div>

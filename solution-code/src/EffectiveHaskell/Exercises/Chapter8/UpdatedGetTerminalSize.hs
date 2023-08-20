@@ -168,24 +168,15 @@ runHCat = do
     tputEither tputType =
       catch @IOException (Right <$> tput tputType) $ \e -> pure $ Left (show e)
 
-<<<<<<< HEAD
-    nonEmptyStrStripNewline str
-      | null str = Left "empty string"
-      | str == "\n" = Left "empty string"
-      | last str == '\n' = Right $ init str
-      | otherwise = Left "missing newline"
+    nonEmptyStrStripNewline str =
+      case unsnoc str of
+        Nothing -> Left "empty string"
+        Just ("", _) -> Left "empty string after removing terminator"
+        Just (str', '\n') -> Right str'
+        Just (_, _) -> Left "missing newline"
 
     readTrailingNewline str =
       nonEmptyStrStripNewline str >>= readEither
-=======
-    nonEmptyStrWithNewline str
-      | null str = Left "empty string"
-      | last str == '\0' = Right $ init str
-      | otherwise = Left "missing newline"
-
-    readTrailingNewline str =
-      nonEmptyStrWithNewline str >>= readEither
->>>>>>> origin/rebecca/chapter8-solutions
 
     tputScreenDimensions = do
       termLines <- tputEither "lines"
@@ -194,17 +185,13 @@ runHCat = do
         parsedLines <- readTrailingNewline =<< termLines
         parsedCols <- readTrailingNewline =<< termCols
         pure $ ScreenDimensions parsedLines parsedCols
-<<<<<<< HEAD
 
 unsnoc :: [a] -> Maybe ([a], a)
-unsnoc [] = Nothing
-unsnoc (x:xs) =
-  case unsnoc xs of
-    Nothing -> Just ([], x)
-    Just (xs', x') -> Just (x:xs', x')
+unsnoc = foldr go Nothing
+  where
+    go x Nothing = Just ([],x)
+    go x (Just (xs,y)) = Just (x:xs, y)
 
 uncons :: [a] -> Maybe (a, [a])
 uncons [] = Nothing
 uncons (x:xs) = Just (x,xs)
-=======
->>>>>>> origin/rebecca/chapter8-solutions
