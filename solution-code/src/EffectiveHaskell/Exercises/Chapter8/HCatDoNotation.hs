@@ -1,114 +1,5 @@
----
-chapter: 8
-exercise-id: 2
-name: Do-ing Some Refactoring
-summary: "
-In this exercise you'll get more experience using do notation by refactoring
-existing code to use do blocks.
-"
----
-
-## Do-ing Some Refactoring {.problem}
-
-Throughout most of this chapter we used bind syntax to implement our IO actions.
-Look through some of the code you've written for opportunities to refactor this
-application to use do-notation where appropriate.
-
-### Hints
-<div class="hints">
-
-<details>
-<summary>Click to reveal</summary>
-<div class="details-body-outer">
-<div class="details-body">
-
-You can mechanically convert between bind and do notation. Every time you see a
-bind followed by a lambda:
-
-```haskell
-example = a >>= \b -> ...
-```
-
-You can replace that code in `do` notation with a binding arrow:
-
-```haskell
-example = do
-  b <- a
-```
-
-Similarly, you can replace the sequence operator:
-
-```haskell
-example = a >> b >> c
-```
-
-with sequental statements in a `do` block without a binding arrow:
-
-```haskell
-example = do
-  a
-  b
-  c
-```
-</div>
-</div>
-</details>
-
-<details>
-<summary>Click to reveal</summary>
-<div class="details-body-outer">
-<div class="details-body">
-
-You can mechanically replace calls to `fmap` (`<$>`):
-
-```haskell
-example = a <$> b
-```
-
-With a `do` block that uses an extra placeholder variable:
-
-```haskell
-example = do
-  b' <- b
-  pure $ a b
-```
-
-</div>
-</div>
-</details>
-
-<details>
-<summary>Click to reveal</summary>
-<div class="details-body-outer">
-<div class="details-body">
-
-Although `do` notation can improve readability, it's not always the best
-choice for readability. It's often better to mix and match both `do` and bind
-notation to improve readability.
-
-</div>
-</div>
-</details>
-
-</div>
-
-### Solution {.solution}
-
-<div class="solution">
-
-<details>
-<summary>Click to reveal</summary>
-
-<div class="details-body-outer">
-<div class="details-body">
-
-Although it's useful to keep in mind that `do` notation isn't always the most
-readable option, here's an example implementation of `HCat` that uses it as much
-as possible.
-
-```haskell
 {-# LANGUAGE OverloadedStrings #-}
-module EffectiveHaskell.Exercises.Chapter8.HCatDoNotation where
+module EffectiveHaskell.Exercises.Chapter8.HCatDoNotation (runHCat) where
 
 import qualified Data.Text as Text
 import qualified Data.Text.IO as TextIO
@@ -147,7 +38,7 @@ handleArgs = do
       _       -> Left "multiple files not supported"
 
 eitherToErr :: Show a => Either a b -> IO b
-eitherToErr (Right a) = return a
+eitherToErr (Right a) = pure a
 eitherToErr (Left e) = Exception.throwIO . IOError.userError $ show e
 
 groupsOf :: Int -> [a] -> [[a]]
@@ -206,7 +97,7 @@ getContinue = do
     _   -> getContinue
 
 showPages :: [Text.Text] -> IO ()
-showPages [] = return ()
+showPages [] = pure ()
 showPages (page:pages) = do
   clearScreen
   TextIO.putStr page
@@ -227,10 +118,3 @@ runHCat = do
   termSize <- getTerminalSize
   let pages = paginate termSize contents
   showPages pages
-```
-
-</div>
-</div>
-</details>
-
-</div>

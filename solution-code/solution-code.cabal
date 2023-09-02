@@ -45,18 +45,19 @@ library
       src
   ghc-options: -Wall -O2
   build-depends:
-      base
-    , base64-bytestring
-    , bytestring
-    , containers
-    , hashable
-    , mtl
-    , process
-    , text
-    , time
-    , transformers
-    , unix
-    , vector
+                    base
+                , base64-bytestring
+                , bytestring
+                , containers
+                , directory
+                , hashable
+                , mtl
+                , process
+                , text
+                , time
+                , transformers
+                , unix
+                , vector
   default-language: Haskell2010
 
 test-suite test
@@ -76,18 +77,19 @@ test-suite test
       test
   ghc-options: -Wall
   build-depends:
-      base
-    , base64-bytestring
-    , bytestring
-    , containers
-    , hashable
-    , hspec
-    , mtl
-    , process
-    , solution-code
-    , text
-    , time
-    , transformers
-    , unix
-    , vector
+                    base
+                , base64-bytestring
+                , bytestring
+                , containers
+                , directory
+                , hashable
+                , hspec
+                , mtl
+                , process
+                , solution-code
+                , text
+                , time
+                , transformers
+                , unix
+                , vector
   default-language: Haskell2010
