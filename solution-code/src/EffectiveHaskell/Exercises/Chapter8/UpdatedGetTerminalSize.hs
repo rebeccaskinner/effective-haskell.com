@@ -17,37 +17,37 @@ data ScreenDimensions = ScreenDimensions
   } deriving (Eq, Show)
 
 
-getTerminalSize :: IO ScreenDimensions
-getTerminalSize =
-  case SystemInfo.os of
-    "darwin" -> tputScreenDimensions
-    "linux" -> tputScreenDimensions
-    _other -> pure $ ScreenDimensions 25 80
-  where
-    tputScreenDimensions :: IO ScreenDimensions
-    tputScreenDimensions =
-      readProcess "tput" ["lines"] ""
-      >>= \lines ->
-        readProcess "tput" ["cols"] ""
-        >>= \cols ->
-              let lines' = read $ init lines
-                  cols'  = read $ init cols
-              in return $ ScreenDimensions lines' cols'
-
-getTerminalSizeWithDefault :: IO ScreenDimensions
-getTerminalSizeWithDefault =
-  catch @IOException tputScreenDimensions $ \_e -> pure (ScreenDimensions 25 80)
-  where
-    tputScreenDimensions :: IO ScreenDimensions
-    tputScreenDimensions =
-      readProcess "tput" ["lines"] ""
-      >>= \lines ->
-        readProcess "tput" ["cols"] ""
-        >>= \cols ->
-              let lines' = read $ init lines
-                  cols'  = read $ init cols
-              in return $ ScreenDimensions lines' cols'
-
+-- getTerminalSize :: IO ScreenDimensions
+-- getTerminalSize =
+--   case SystemInfo.os of
+--     "darwin" -> tputScreenDimensions
+--     "linux" -> tputScreenDimensions
+--     _other -> pure $ ScreenDimensions 25 80
+--   where
+--     tputScreenDimensions :: IO ScreenDimensions
+--     tputScreenDimensions =
+--       readProcess "tput" ["lines"] ""
+--       >>= \lines ->
+--         readProcess "tput" ["cols"] ""
+--         >>= \cols ->
+--               let lines' = read $ init lines
+--                   cols'  = read $ init cols
+--               in return $ ScreenDimensions lines' cols'
+--
+-- getTerminalSizeWithDefault :: IO ScreenDimensions
+-- getTerminalSizeWithDefault =
+--   catch @IOException tputScreenDimensions $ \_e -> pure (ScreenDimensions 25 80)
+--   where
+--     tputScreenDimensions :: IO ScreenDimensions
+--     tputScreenDimensions =
+--       readProcess "tput" ["lines"] ""
+--       >>= \lines ->
+--         readProcess "tput" ["cols"] ""
+--         >>= \cols ->
+--               let lines' = read $ init lines
+--                   cols'  = read $ init cols
+--               in return $ ScreenDimensions lines' cols'
+--
 handleArgs :: IO (Either String FilePath)
 handleArgs =
   parseArgs <$> Environment.getArgs
@@ -147,44 +147,55 @@ runHCat = do
   showPages pages
   where
     defaultScreenDimensions = ScreenDimensions 25 80
-
     showError finfo termSize err =
       showPages $ paginate termSize finfo err
-
     termSizeWithDefault finfo defaultTermSize = do
-      termSize <- getTerminalSizeEither
+      termSize <- tputScreenDimensions
       case termSize of
         Left err -> do
           showError finfo defaultTermSize (Text.pack err)
           pure defaultTermSize
         Right termSize' -> pure termSize'
 
-    getTerminalSizeEither =
-      catch @IOException tputScreenDimensions $ \e -> pure $ Left (show e)
+tput :: String -> IO String
+tput tputType =
+  readProcess "tput" [tputType] ""
 
-    tput tputType =
-      readProcess "tput" [tputType] ""
+tputEither :: String -> IO (Either String String)
+tputEither tputType =
+  catch @IOException (Right <$> tput tputType) $ \e -> pure $ Left (show e)
 
-    tputEither tputType =
-      catch @IOException (Right <$> tput tputType) $ \e -> pure $ Left (show e)
+nonEmptyStrStripNewline :: String -> Either String Int
+nonEmptyStrStripNewline str =
+  case unsnoc str of
+    Nothing -> Left "empty string"
+    Just ("", _) -> Left "empty string after removing terminator"
+    Just (str', '\n') -> readEither str'
+    Just (_, _) -> Left "missing newline"
 
-    nonEmptyStrStripNewline str =
-      case unsnoc str of
-        Nothing -> Left "empty string"
-        Just ("", _) -> Left "empty string after removing terminator"
-        Just (str', '\n') -> Right str'
-        Just (_, _) -> Left "missing newline"
+tputScreenDimensions :: IO (Either String ScreenDimensions)
+tputScreenDimensions = do
+  termLines <- tputEither "lines"
+  termCols <- tputEither "cols"
+  pure $
+    let
+      parsedTermLines = termLines `andThen` nonEmptyStrStripNewline
+      parsedTermCols = termCols `andThen` nonEmptyStrStripNewline
+    in applyRight ScreenDimensions parsedTermLines `applyEither` parsedTermCols
 
-    readTrailingNewline str =
-      nonEmptyStrStripNewline str >>= readEither
+applyRight :: (a -> b) -> Either err a -> Either err b
+applyRight _f (Left err) = Left err
+applyRight f (Right val) = Right (f val)
 
-    tputScreenDimensions = do
-      termLines <- tputEither "lines"
-      termCols <- tputEither "cols"
-      pure $ do
-        parsedLines <- readTrailingNewline =<< termLines
-        parsedCols <- readTrailingNewline =<< termCols
-        pure $ ScreenDimensions parsedLines parsedCols
+applyEither :: Either err (a -> b) -> Either err a -> Either err b
+applyEither (Left err) _val = Left err
+applyEither (Right f) val = applyRight f val
+
+andThen :: Either err a -> (a -> Either err b) -> Either err b
+andThen val f =
+  case val of
+    Left err -> Left err
+    Right val' -> f val'
 
 unsnoc :: [a] -> Maybe ([a], a)
 unsnoc = foldr go Nothing

@@ -26,7 +26,7 @@ have occurred.  Try address these edge cases:
 <summary>Click to reveal</summary>
 <div class="details-body-outer">
 <div class="details-body">
-
+If an executable is missing, `readProcess` will throw an `IOException`.
 </div>
 </div>
 </details>
@@ -36,6 +36,17 @@ have occurred.  Try address these edge cases:
 <div class="details-body-outer">
 <div class="details-body">
 
+The `readEither` function from `Text.Read` in `base` works like `read` except
+that it returns a useful error message if it can't parse the string, instead of
+generating a runtime error:
+
+```haskell
+λ readEither @Int "100"
+Right 100
+
+λ readEither @Int "one hundred"
+Left "Prelude.read: no parse"
+```
 </div>
 </div>
 </details>
@@ -44,6 +55,22 @@ have occurred.  Try address these edge cases:
 <summary>Click to reveal</summary>
 <div class="details-body-outer">
 <div class="details-body">
+
+The `evaluate` function from `Control.Exception` in `base` will let handle
+runtime exceptions in pure code, similar to the way you can handle `IO`
+exceptions.
+
+```haskell
+λ import Control.Exception
+λ catch @ErrorCall (evaluate 100) $ \err -> putStrLn ("runtime error: " <> show err) >> pure 0
+100
+
+λ catch @ErrorCall (evaluate $ error "oh no!") $ \err -> putStrLn ("runtime error: " <> show err) >> pure 0
+runtime error: oh no!
+CallStack (from HasCallStack):
+  error, called at <interactive>:65:30 in interactive:Ghci4
+0
+```
 
 </div>
 </div>
@@ -422,7 +449,7 @@ expect. For our purposes, we expect that the output should always be newline
 terminated. If there's no newline, we can't be sure the rest of the text is
 reliable, so we'll go with the strict approach.
 
-We need towrite a function called `nonEmptyStrStripNewline` that will either
+We need to write a function called `nonEmptyStrStripNewline` that will either
 return a non-empty string with the newline terminated from the end, or an
 appropriate error. There are quite a few edge cases we'll need to deal with in
 this function:
@@ -431,11 +458,182 @@ this function:
   - The string doesn't end with a newline
   - After removing the newline we're left with an empty string
 
-Naively handling all of these edge cases is entirely possible, but we can get
-some help by implementing our own version of a function named `unsnoc`:
+We can handle all of these cases directly in our code, but there's an easier
+way: the `unsnoc` function. It's a funny name for a function with a pretty
+simple behavior: it takes the last element out of a list, and returns it
+alongside the the newly shortened list. The name is a nod to the `uncons`
+function that removes the head of list and returns it along with the tail.
+
+Both `uncons` and `unsnoc` are common functions that are defined for quite a few
+times, including `ByteString` and `Text`. They aren't defined for
+ordinary lists in `Prelude`, but we can fix that!
 
 ```haskell
+uncons :: [a] -> Maybe (a, [a])
+uncons [] = Nothing
+uncons (x:xs) = Just (x,xs)
 
+unsnoc :: [a] -> Maybe ([a], a)
+unsnoc = foldr go Nothing
+  where
+    go x Nothing = Just ([],x)
+    go x (Just (xs,y)) = Just (x:xs, y)
+```
+
+Let's try them in `ghci`:
+
+```haskell
+-- uncons removes the first element in a list
+
+λ uncons "abc"
+Just ('a',"bc")
+
+λ uncons "abcde"
+Just ('a',"bcde")
+
+λ uncons "a"
+Just ('a',"")
+
+λ uncons ""
+Nothing
+
+-- unsnoc removes the last element
+λ unsnoc "abc"
+Just ("ab",'c')
+
+λ unsnoc "abcde"
+Just ("abcd",'e')
+
+λ unsnoc "a"
+Just ("",'a')
+
+λ unsnoc ""
+Nothing
+```
+
+As you can see `unsnoc` lets us easily remove the last element from a list, and
+returns `Nothing` if we try to pass it an empty list. This gives us a nice
+starting point for a function that will strip the newline off of a non-empty
+string, and parse whatever is left.
+
+```haskell
+nonEmptyStrStripNewline :: String -> Either String Int
+nonEmptyStrStripNewline str =
+  case unsnoc str of
+    Nothing -> Left "empty string"
+    Just ("", _) -> Left "empty string after removing terminator"
+    Just (str', '\n') -> readEither str'
+    Just (_, _) -> Left "missing newline"
+```
+
+Let's try this out in `ghci` to see if it does everything we need:
+
+```haskell
+λ nonEmptyStrStripNewline ""
+Left "empty string"
+
+λ nonEmptyStrStripNewline "\n"
+Left "empty string after removing terminator"
+
+λ nonEmptyStrStripNewline "one\n"
+Left "Prelude.read: no parse"
+
+λ nonEmptyStrStripNewline "one"
+Left "missing newline"
+
+λ nonEmptyStrStripNewline "100"
+Left "missing newline"
+
+λ nonEmptyStrStripNewline "100\n"
+Right 100
+```
+
+Success! It looks like all of the various edge cases that we wanted to deal with
+are handled. Next, we'll need to use this to write a new version of
+`tputScreenDimensions` that will fetch the screen dimensions with `tput` and
+parse them using our new function. Unfortunately, our first pass at this ends up
+looking a little messy:
+
+```haskell
+tputScreenDimensions :: IO (Either String ScreenDimensions)
+tputScreenDimensions = do
+  termLines <- tputEither "lines"
+  termCols <- tputEither "cols"
+  pure $
+     case termLines of
+      Left err -> Left err
+      Right termLines' ->
+        case termCols of
+          Left err -> Left err
+          Right termCols' ->
+            case nonEmptyStrStripNewline termLines' of
+              Left err -> Left err
+              Right parsedLines ->
+                case nonEmptyStrStripNewline termCols' of
+                  Left err -> Left err
+                  Right parsedCols ->
+                    Right $ ScreenDimensions parsedLines parsedCols
+
+```
+
+In Chapter 9 you'll learn how monads make patterns like this much more
+readable. For now, we can live with the nested case statements, or we can write
+some helper functions to make things a bit more readable:
+
+```haskell
+tputScreenDimensions :: IO (Either String ScreenDimensions)
+tputScreenDimensions = do
+  termLines <- tputEither "lines"
+  termCols <- tputEither "cols"
+  pure $
+    let
+      parsedTermLines = termLines `andThen` nonEmptyStrStripNewline
+      parsedTermCols = termCols `andThen` nonEmptyStrStripNewline
+    in applyRight ScreenDimensions parsedTermLines `applyEither` parsedTermCols
+
+applyRight :: (a -> b) -> Either err a -> Either err b
+applyRight _f (Left err) = Left err
+applyRight f (Right val) = Right (f val)
+
+applyEither :: Either err (a -> b) -> Either err a -> Either err b
+applyEither (Left err) _val = Left err
+applyEither (Right f) val = applyRight f val
+
+andThen :: Either err a -> (a -> Either err b) -> Either err b
+andThen val f =
+  case val of
+    Left err -> Left err
+    Right val' -> f val'
+```
+
+The last thing we need to do is update `runHCat` with the new version of our
+code.
+
+```haskell
+runHCat :: IO ()
+runHCat = do
+  targetFilePath <- do
+    args <- handleArgs
+    eitherToErr args
+  contents <- do
+    handle <- openFile targetFilePath ReadMode
+    TextIO.hGetContents handle
+  hSetBuffering stdout NoBuffering
+  finfo <- fileInfo targetFilePath
+  termSize <- termSizeWithDefault finfo defaultScreenDimensions
+  let pages = paginate termSize finfo contents
+  showPages pages
+  where
+    defaultScreenDimensions = ScreenDimensions 25 80
+    showError finfo termSize err =
+      showPages $ paginate termSize finfo err
+    termSizeWithDefault finfo defaultTermSize = do
+      termSize <- tputScreenDimensions
+      case termSize of
+        Left err -> do
+          showError finfo defaultTermSize (Text.pack err)
+          pure defaultTermSize
+        Right termSize' -> pure termSize'
 ```
 
 </div>
