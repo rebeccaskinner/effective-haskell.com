@@ -236,8 +236,126 @@ similar enough it might be hard to spot all the differences. Let's diff them:
 > showFileCount fileName = BS.readFile fileName >>= BS.putStrLn . showWordCounts . countWords
 ```
 </details>
+![a screen shot showing the differences between the String and ByteString implementations of a word count tool](/images/solutions/chapter8/count-words-string-bytestring-diff.webp)
 
-![a screen shot showing the differences between the two implementations](/images/solutions/chapter8/count-words-string-bytestring-diff.webp)
+As you can see from the diff, the changes we've made to refactor our code to use
+a `ByteString` instead of a `String` are minimal. We've changed `String` to
+`ByteString` in the type annotations for our top-level functions, and we've
+replaced calls to list functions in `Prelude` like `reverse` and `replicate`
+with the equivalent functions in `Data.ByteString`.
+
+Let's refactor this program one more time, this time to use `Text` instead of
+`ByteString`:
+
+```haskell
+{-# LANGUAGE OverloadedStrings #-}
+module EffectiveHaskell.Exercises.Chapter8.CountWordsText where
+import Data.Text (Text)
+import qualified Data.Text as Text
+import qualified Data.Text.IO as Text
+import Data.Char
+
+addWord :: Text -> [(Text, Int)] -> [(Text, Int)]
+addWord targetWord [] = [(targetWord, 1)]
+addWord targetWord ((thisWord, thisCount) : rest)
+  | targetWord == thisWord = (thisWord, thisCount + 1) : rest
+  | otherwise = (thisWord, thisCount) : addWord targetWord rest
+
+countWords :: Text -> [(Text, Int)]
+countWords =
+  foldr addWord [] .
+  dropShortWords .
+  Text.words .
+  normalize
+  where
+    dropShortWords = filter (\w -> Text.length w >= 3)
+    normalize = Text.map (dropPunctuation . toLower)
+    dropPunctuation char
+      | isLetter char || isNumber char = char
+      | otherwise = ' '
+
+showWordCounts :: [(Text, Int)] -> Text
+showWordCounts wordCounts = Text.unlines $ map showWordCount wordCounts
+  where
+    maxWordLength = maximum [Text.length word | (word, _) <- wordCounts]
+    paddingLength = maxWordLength + 4
+    padding = Text.replicate paddingLength "."
+    wordWithPadding word = Text.take paddingLength $ word <> padding
+    maxNumLength = maximum $ map (Text.length . Text.pack . show . snd) wordCounts
+    numPadding = Text.replicate maxNumLength "."
+    rightAlignNum num = Text.reverse . Text.take maxNumLength $ Text.reverse (Text.pack $ show num) <> numPadding
+    showWordCount (word, count) =
+      wordWithPadding word <> rightAlignNum count
+
+showFileCount :: FilePath -> IO ()
+showFileCount fileName = Text.readFile fileName >>= Text.putStrLn . showWordCounts . countWords
+```
+
+And, like before, let's look at the diff:
+
+<details>
+<summary>Expand to see text diff</summary>
+```
+2,4c2,5
+< module EffectiveHaskell.Exercises.Chapter8.CountWordsByteString where
+< import Data.ByteString (ByteString)
+< import qualified Data.ByteString.Char8 as BS
+---
+> module EffectiveHaskell.Exercises.Chapter8.CountWordsText where
+> import Data.Text (Text)
+> import qualified Data.Text as Text
+> import qualified Data.Text.IO as Text
+7c8
+< addWord :: ByteString -> [(ByteString, Int)] -> [(ByteString, Int)]
+---
+> addWord :: Text -> [(Text, Int)] -> [(Text, Int)]
+13c14
+< countWords :: ByteString -> [(ByteString, Int)]
+---
+> countWords :: Text -> [(Text, Int)]
+17c18
+<   BS.words .
+---
+>   Text.words .
+20,21c21,22
+<     dropShortWords = filter (\w -> BS.length w >= 3)
+<     normalize = BS.map (dropPunctuation . toLower)
+---
+>     dropShortWords = filter (\w -> Text.length w >= 3)
+>     normalize = Text.map (dropPunctuation . toLower)
+26,27c27,28
+< showWordCounts :: [(ByteString, Int)] -> ByteString
+< showWordCounts wordCounts = BS.unlines $ map showWordCount wordCounts
+---
+> showWordCounts :: [(Text, Int)] -> Text
+> showWordCounts wordCounts = Text.unlines $ map showWordCount wordCounts
+29c30
+<     maxWordLength = maximum [BS.length word | (word, _) <- wordCounts]
+---
+>     maxWordLength = maximum [Text.length word | (word, _) <- wordCounts]
+31,35c32,36
+<     padding = BS.replicate paddingLength '.'
+<     wordWithPadding word = BS.take paddingLength $ word <> padding
+<     maxNumLength = maximum $ map (BS.length . BS.pack . show . snd) wordCounts
+<     numPadding = BS.replicate maxNumLength '.'
+<     rightAlignNum num = BS.reverse . BS.take maxNumLength $ BS.reverse (BS.pack $ show num) <> numPadding
+---
+>     padding = Text.replicate paddingLength "."
+>     wordWithPadding word = Text.take paddingLength $ word <> padding
+>     maxNumLength = maximum $ map (Text.length . Text.pack . show . snd) wordCounts
+>     numPadding = Text.replicate maxNumLength "."
+>     rightAlignNum num = Text.reverse . Text.take maxNumLength $ Text.reverse (Text.pack $ show num) <> numPadding
+40c41
+< showFileCount fileName = BS.readFile fileName >>= BS.putStrLn . showWordCounts . countWords
+---
+> showFileCount fileName = Text.readFile fileName >>= Text.putStrLn . showWordCounts . countWords
+```
+</details>
+
+![a screen shot showing the differences between the ByteString and Text
+implementations of a word count tool](/images/solutions/chapter8/count-words-bytestring-text-diff.webp)
+
+Once again, you can see that the changes we needed to make were minimal.
 
 </div>
 </div>
