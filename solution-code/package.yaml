@@ -9,6 +9,7 @@ dependencies:
   - bytestring
   - base64-bytestring
   - containers
+  - directory
   - text
   - vector
   - time
@@ -24,6 +25,14 @@ ghc-options:
 library:
   source-dirs: src
   ghc-options: -O2
+
+executable:
+  source-dirs: app
+  main: Main.hs
+  ghc-options: -O2
+  dependencies:
+    - base
+    - solution-code
 
 tests:
   test:

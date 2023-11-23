@@ -1,3 +1,4 @@
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
 module EffectiveHaskell.Exercises.Chapter8.HCatDoNotation (runHCat) where
 
@@ -11,6 +12,9 @@ import System.IO
 import System.Process (readProcess)
 import qualified System.Info as SystemInfo
 import qualified Data.Time.Clock as Clock
+import qualified System.Directory as Directory
+import qualified Text.Printf as Printf
+import qualified Data.Time.Format as TimeFormat
 
 data ContinueCancel = Continue | Cancel deriving (Eq, Show)
 
@@ -22,6 +26,43 @@ data FileInfo = FileInfo
   , fileWriteable :: Bool
   , fileExecutable :: Bool
   } deriving Show
+
+formatFileInfo :: FileInfo -> Int -> Int -> Int -> Text.Text
+formatFileInfo FileInfo{..} maxWidth totalPages currentPage =
+  let
+    timestamp =
+      TimeFormat.formatTime TimeFormat.defaultTimeLocale "%F %T" fileMTime
+    permissionField :: Bool -> String -> String
+    permissionField isSet s = if isSet then s else "-"
+    permissionString = permissionField fileReadable "r"
+                       <> permissionField fileWriteable "w"
+                       <> permissionField fileExecutable "x"
+    statusLine = Text.pack $
+      Printf.printf "%s | permissions: %s | %d bytes | modified: %s | page: %d of %d" filePath permissionString fileSize timestamp currentPage totalPages
+
+  in escapeInvertText (truncateStatus statusLine)
+  where
+    truncateStatus statusLine
+      | maxWidth <= 3 = Text.replicate maxWidth "."
+      | Text.length statusLine > maxWidth =
+        Text.take (maxWidth - 3) statusLine <> "..."
+      | otherwise = statusLine
+
+fileInfo :: FilePath -> IO FileInfo
+fileInfo filePath = do
+  perms <- Directory.getPermissions filePath
+  mtime <- Directory.getModificationTime filePath
+  size <- BS.length <$> BS.readFile filePath
+  return FileInfo
+    { filePath = filePath
+    , fileSize = size
+    , fileMTime = mtime
+    , fileReadable = Directory.readable perms
+    , fileWriteable = Directory.writable perms
+    , fileExecutable = Directory.executable perms
+    }
+
+
 
 data ScreenDimensions = ScreenDimensions
   { screenRows :: Int
@@ -65,9 +106,10 @@ wordWrap lineLength lineText
 
 paginate :: ScreenDimensions -> Text.Text -> [Text.Text]
 paginate (ScreenDimensions rows cols) text =
-  let unwrappedLines = Text.lines text
-      wrappedLines = concatMap (wordWrap cols) unwrappedLines
-      pageLines = groupsOf rows wrappedLines
+  let
+    unwrappedLines = Text.lines text
+    wrappedLines = concatMap (wordWrap cols) unwrappedLines
+    pageLines = groupsOf rows wrappedLines
   in map Text.unlines pageLines
 
 getTerminalSize :: IO ScreenDimensions
@@ -108,6 +150,14 @@ showPages (page:pages) = do
 
 clearScreen :: IO ()
 clearScreen = BS.putStr "\^[[1J\^[[1;1H"
+
+escapeInvertText :: Text.Text -> Text.Text
+escapeInvertText inputStr =
+  let
+    reverseVideo = "\^[[7m"
+    resetVideo = "\^[[0m"
+  in reverseVideo <> inputStr <> resetVideo
+
 
 runHCat :: IO ()
 runHCat = do

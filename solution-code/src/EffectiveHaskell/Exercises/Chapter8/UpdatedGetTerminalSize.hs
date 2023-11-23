@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeApplications #-}
 module EffectiveHaskell.Exercises.Chapter8.UpdatedGetTerminalSize where
 import qualified Data.Text.IO as TextIO
 import qualified System.Info as SystemInfo

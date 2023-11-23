@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeApplications #-}
 module EffectiveHaskell.Exercises.Chapter8.ReadError where
 import Control.Exception
 
