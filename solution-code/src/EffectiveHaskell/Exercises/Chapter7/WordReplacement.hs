@@ -1,5 +1,4 @@
--- module EffectiveHaskell.Exercises.Chapter7.WordReplacement where
-module Main where
+module EffectiveHaskell.Exercises.Chapter7.WordReplacement where
 import System.Environment
 
 data Config = Config
@@ -27,5 +26,5 @@ runConfig (Config path needle replacement) = do
   document <- readFile path
   return $ replaceTargetInDocument needle replacement document
 
-main :: IO ()
-main = getConfig >>= runConfig >>= putStrLn
+exampleMain :: IO ()
+exampleMain = getConfig >>= runConfig >>= putStrLn
