@@ -161,13 +161,6 @@ paginateHelpText terminalSize =
     helpStatusBar cols _ _ =
       Text.take cols $ "Help Info: Press 'q' to exit" <> Text.replicate cols " "
 
-data UserInput
-  = PageNext
-  | PagePrevious
-  | HelpScreen
-  | Cancel
-  deriving (Eq, Show)
-
 helpText :: Text
 helpText =
   Text.unlines
@@ -180,6 +173,13 @@ helpText =
     , ""
     , "all other keypresses will be ignored"
     ]
+
+data UserInput
+  = PageNext
+  | PagePrevious
+  | HelpScreen
+  | Cancel
+  deriving (Eq, Show)
 
 getInput :: IO UserInput
 getInput = do

@@ -52,6 +52,9 @@ library
       EffectiveHaskell.Exercises.Chapter8.HCatDoNotation
       EffectiveHaskell.Exercises.Chapter8.HCatHelpScreen
       EffectiveHaskell.Exercises.Chapter8.HCatMultiFile
+      EffectiveHaskell.Exercises.Chapter8.HCatResizeTerminal
+      EffectiveHaskell.Exercises.Chapter8.HCatResizeTerminalPreserveState
+      EffectiveHaskell.Exercises.Chapter8.HCatResizeTerminalPreserveState2
       EffectiveHaskell.Exercises.Chapter8.ReadError
       EffectiveHaskell.Exercises.Chapter8.UpdatedGetTerminalSize
       EffectiveHaskell.Exercises.Chapter8.ZipList

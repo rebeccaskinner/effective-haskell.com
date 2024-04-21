@@ -10,6 +10,22 @@ import qualified Data.List.NonEmpty as NL
 data ZipList a = ZipList [a] a [a]
   deriving (Eq, Show)
 
+instance Functor ZipList where
+  fmap f (ZipList h a t) = ZipList (f <$> h) (f a) (f <$> t)
+
+-- | modify all elements in the zip list. Use 'modify' to modify only
+-- the current element.
+map :: (a -> b) -> ZipList a -> ZipList b
+map = fmap
+
+-- | Change only the elements behind the cursor (previous elements)
+mapPrev :: (a -> a) -> ZipList a -> ZipList a
+mapPrev g (ZipList f c t) = ZipList (g <$> f) c t
+
+-- | Change only the remaining elements in the list (next elements)
+mapNext :: (a -> a) -> ZipList a -> ZipList a
+mapNext g (ZipList f c t) = ZipList f c (g <$> t)
+
 -- | Creates a zip-list with a single element. The cursor is set to
 -- the element.
 singleton :: a -> ZipList a
@@ -150,6 +166,14 @@ cursorEnd z
 -- | Return the value under the cursor.
 value :: ZipList a -> a
 value (ZipList _ c _) = c
+
+-- | Modify the value under the cursor.
+modify :: (a -> a) -> ZipList a -> ZipList a
+modify f (ZipList h a t) = ZipList h (f a) t
+
+-- | Set the value at the cursor
+set :: a -> ZipList a -> ZipList a
+set newVal (ZipList h _ t) = ZipList h newVal t
 
 -- | Move the value "forward" one element (toward the tail). Has no
 -- effect if the cursor is already at the end of the list.
